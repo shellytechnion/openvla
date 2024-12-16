@@ -119,7 +119,6 @@ dependencies:
       - contourpy==1.3.0
       - cycler==0.12.1
       - dill==0.3.9
-      - dlimp==0.0.1
       - dm-tree==0.1.8
       - docker-pycreds==0.4.0
       - draccus==0.9.3

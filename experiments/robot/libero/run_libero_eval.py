@@ -19,13 +19,17 @@ Usage:
 
 import os
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from pathlib import Path
 from typing import Optional, Union
+import yaml
 
 import draccus
 import numpy as np
 import tqdm
+sys.path.append("/home/shellyf/Projects/openvla")
+sys.path.append("/home/shellyf/Projects/openvla/LIBERO")
+sys.path.append("LIBERO")
 from libero.libero import benchmark
 
 import wandb
@@ -64,7 +68,7 @@ class GenerateConfig:
     load_in_4bit: bool = False                       # (For OpenVLA only) Load with 4-bit quantization
 
     center_crop: bool = True                         # Center crop? (if trained w/ random crop image aug)
-
+    device: str = "cuda:0"                           # Device to run model on
     #################################################################################################################
     # LIBERO environment-specific parameters
     #################################################################################################################
@@ -83,6 +87,16 @@ class GenerateConfig:
     wandb_entity: str = "YOUR_WANDB_ENTITY"          # Name of entity to log under
 
     seed: int = 7                                    # Random Seed (for reproducibility)
+
+    @staticmethod
+    def from_yaml(file_path: Union[str, Path]) -> 'GenerateConfig':
+        with open(file_path, 'r') as file:
+            config_dict = yaml.safe_load(file)
+        # Filter out unexpected fields
+        valid_fields = {f.name for f in fields(GenerateConfig)}
+        filtered_config_dict = {k: v for k, v in config_dict.items() if k in valid_fields}
+
+        return GenerateConfig(**filtered_config_dict)
 
     # fmt: on
 
@@ -283,4 +297,8 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
 
 if __name__ == "__main__":
-    eval_libero()
+    try:
+        config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
+    except FileNotFoundError:
+        config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
+    eval_libero(config)

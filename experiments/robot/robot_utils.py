@@ -16,7 +16,6 @@ from experiments.robot.openvla_utils import (
 ACTION_DIM = 7
 DATE = time.strftime("%Y_%m_%d")
 DATE_TIME = time.strftime("%Y_%m_%d-%H_%M_%S")
-DEVICE = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 np.set_printoptions(formatter={"float": lambda x: "{0:0.3f}".format(x)})
 
 # Initialize system prompt for OpenVLA v0.1.
@@ -64,7 +63,7 @@ def get_action(cfg, model, obs, task_label, processor=None):
     """Queries the model to get an action."""
     if cfg.model_family == "openvla":
         action = get_vla_action(
-            model, processor, cfg.pretrained_checkpoint, obs, task_label, cfg.unnorm_key, center_crop=cfg.center_crop
+            model, processor, cfg.pretrained_checkpoint, obs, task_label, cfg.unnorm_key, cfg.device, center_crop=cfg.center_crop
         )
         assert action.shape == (ACTION_DIM,)
     else:

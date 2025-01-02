@@ -62,13 +62,13 @@ def get_image_resize_size(cfg):
 def get_action(cfg, model, obs, task_label, processor=None):
     """Queries the model to get an action."""
     if cfg.model_family == "openvla":
-        action = get_vla_action(
+        action, probs = get_vla_action(
             model, processor, cfg.pretrained_checkpoint, obs, task_label, cfg.unnorm_key, cfg.device, center_crop=cfg.center_crop
         )
         assert action.shape == (ACTION_DIM,)
     else:
         raise ValueError("Unexpected `model_family` found in config.")
-    return action
+    return action, probs
 
 
 def normalize_gripper_action(action, binarize=True):

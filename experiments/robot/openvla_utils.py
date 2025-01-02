@@ -7,7 +7,8 @@ import time
 import numpy as np
 import tensorflow as tf
 import torch
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
+import numpy as np
 from transformers import AutoConfig, AutoImageProcessor, AutoModelForVision2Seq, AutoProcessor
 
 from prismatic.extern.hf.configuration_prismatic import OpenVLAConfig
@@ -37,9 +38,9 @@ def get_vla(cfg):
     AutoConfig.register("openvla", OpenVLAConfig)
     AutoImageProcessor.register(OpenVLAConfig, PrismaticImageProcessor)
     AutoProcessor.register(OpenVLAConfig, PrismaticProcessor)
-    AutoModelForVision2Seq.register(OpenVLAConfig, OpenVLAForActionPrediction)
+    AutoModelForVision2Seq.register("openvla", OpenVLAConfig, OpenVLAForActionPrediction)
 
-    vla = AutoModelForVision2Seq.from_pretrained(
+    vla = OpenVLAForActionPrediction.from_pretrained(
         cfg.pretrained_checkpoint,
         attn_implementation="flash_attention_2",
         torch_dtype=torch.bfloat16,
@@ -60,7 +61,7 @@ def get_vla(cfg):
         # vla = vla.to(DEVICE)
 
     # Load dataset stats used during finetuning (for action un-normalization).
-    dataset_statistics_path = os.path.join(cfg.pretrained_checkpoint, "dataset_statistics.json")
+    dataset_statistics_path = os.path.join("experiments/robot/libero/experiments", "dataset_statistics.json")
     if os.path.isfile(dataset_statistics_path):
         with open(dataset_statistics_path, "r") as f:
             norm_stats = json.load(f)
@@ -168,6 +169,78 @@ def get_vla_action(vla, processor, base_vla_name, obs, task_label, unnorm_key, d
     # Process inputs.
     inputs = processor(prompt, image).to(device, dtype=torch.bfloat16)
 
-    # Get action.
-    action = vla.predict_action(**inputs, unnorm_key=unnorm_key, do_sample=False)
-    return action
+    # Get action and probabilities for each action
+    action, probs = vla.predict_action(**inputs, unnorm_key=unnorm_key, do_sample=False)
+    return action, probs
+
+def add_text_to_image(image: np.ndarray, text: str, position: tuple = (5, 5)) -> np.ndarray:
+    # Convert the NumPy array image to a PIL image
+    pil_image = Image.fromarray(image)
+
+    # Create a drawing context
+    draw = ImageDraw.Draw(pil_image)
+
+    # Load a font
+    font = ImageFont.truetype(os.path.join(os.getcwd(), r'Arial.ttf'), 9)
+
+    # Draw the text on the image
+    draw.text(position, text, font=font, fill=(255, 255, 255),align ="left")
+
+    # Convert the PIL image back to a NumPy array
+    return np.array(pil_image)
+
+def probs_for_calibration(probs, type="mul"):
+    """
+    applying the type function on the probabilities list
+    Options: mul, max, min, avg, perplexity,
+    """
+    if type == "mul": # multiply all probabilities in the array by each other
+        return np.prod(probs)
+    elif type == "max": # return the maximum probability in the array
+        return np.max(probs)
+    elif type == "min": # return the minimum probability in the array
+        return np.min(probs)
+    elif type == "avg": # return the average probability in the array
+        return np.mean(probs)
+    # elif type == "perplexity": # calculate the perplexity of the probabilities
+    #     return 2 ** (-np.mean(np.log2(probs)))
+    else:
+        raise ValueError("type should be either 'mul' or 'div'")
+
+
+def calculate_ece(confidences, success_rate, num_bins=10):
+    """
+    Computes the Expected Calibration Error (ECE).
+    Args:
+        confidences (list): List of confidence scores corresponding to predictions (0 to 1).
+        success_rate (list): List of ground truth labels.
+        num_bins (int): Number of bins for bucketing predictions by confidence.
+    Returns:
+        float: Expected Calibration Error (ECE).
+    """
+
+    if len(success_rate) != len(confidences) :
+        raise ValueError("Length of confidences, and ground_truth must be the same.")
+    # Initialize bins
+    bin_boundaries = np.linspace(0, 1, num_bins + 1)
+    bin_indices = np.digitize(confidences, bin_boundaries, right=True) - 1  # Adjust index to 0-based
+    ece = 0.0
+    empty_bins = 0
+    # Iterate through each bin
+    for bin_idx in range(num_bins):
+        # Get indices of predictions in the current bin
+        bin_mask = bin_indices == bin_idx
+        if np.sum(bin_mask) == 0:
+            empty_bins += 1
+            continue  # Skip empty bins
+        # Get accuracy and average confidence for the bin
+        bin_confidences = np.array(confidences)[bin_mask]
+        bin_success_rate = np.array(success_rate)[bin_mask]
+        bin_avg_confidence = np.mean(bin_confidences)
+        bin_avg_success_rate = np.mean(bin_success_rate)
+
+        # Compute contribution to ECE
+        ece += np.abs(bin_avg_confidence - bin_avg_success_rate)
+
+    return ece / (num_bins - empty_bins)
+

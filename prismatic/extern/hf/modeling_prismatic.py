@@ -507,7 +507,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         self, input_ids: Optional[torch.LongTensor] = None, unnorm_key: Optional[str] = None, **kwargs: str
     ) -> Tuple[np.ndarray, torch.Tensor]:
         """Thin wrapper around .generate() that decodes predicted actions and unnormalizes them."""
-        # If the special empty token ('') does not already appear after the colon (':') token in the prompt
+        # If the special empty token ('') does not already appear after the colon (':') token in the prompt.
         # (after "OUT:" or "ASSISTANT:"), insert it to match the inputs seen at training time
         if not torch.all(input_ids[:, -1] == 29871):
             input_ids = torch.cat(
@@ -517,7 +517,6 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         # Run VLA inference
         generated_ids = self.generate(input_ids, max_new_tokens=self.get_action_dim(unnorm_key), output_scores=True,
                                       return_dict_in_generate=True, **kwargs)
-
         # Extract predicted action tokens and translate into (normalized) continuous actions
         predicted_action_token_ids = generated_ids.sequences[0, -self.get_action_dim(unnorm_key) :].cpu().numpy()
         discretized_actions = self.vocab_size - predicted_action_token_ids
@@ -535,8 +534,13 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         )
 
         logits = generated_ids.scores
+        import torch.nn.functional as F
+        new_logits = [F.softmax(logits[i], dim=1) for i in range(len(logits))]
+        probs = np.array([i.max().cpu().numpy() for i in new_logits])
+        test = [predicted_action_token_ids[i] == np.argmax(new_logits[i].cpu().numpy()) for i in range(len(logits))]
+        assert (np.array(test) == True).all()
 
-        return actions, logits
+        return actions, probs
 
     @staticmethod
     def _check_unnorm_key(norm_stats: Dict[str, Dict[str, Any]], unnorm_key: Optional[str]) -> str:

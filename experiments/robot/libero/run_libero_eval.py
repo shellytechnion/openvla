@@ -27,9 +27,12 @@ import yaml
 import draccus
 import numpy as np
 import tqdm
-sys.path.append("/home/shellyf/Projects/openvla")
-sys.path.append("/home/shellyf/Projects/openvla/LIBERO")
-sys.path.append("LIBERO")
+import csv
+sys.path.append('/mnt/pub/shellyf/tmp_openVLA')
+sys.path.append('/mnt/pub/shellyf/tmp_openVLA/LIBERO')
+#sys.path.append("/home/shellyf/Projects/openvla")
+#sys.path.append("/home/shellyf/Projects/openvla/LIBERO")
+# sys.path.append("LIBERO")
 from libero.libero import benchmark
 
 import wandb
@@ -43,7 +46,7 @@ from experiments.robot.libero.libero_utils import (
     quat2axisangle,
     save_rollout_video,
 )
-from experiments.robot.openvla_utils import get_processor
+from experiments.robot.openvla_utils import get_processor, add_text_to_image, probs_for_calibration, calculate_ece
 from experiments.robot.robot_utils import (
     DATE_TIME,
     get_action,
@@ -75,7 +78,13 @@ class GenerateConfig:
     task_suite_name: str = "libero_spatial"          # Task suite. Options: libero_spatial, libero_object, libero_goal, libero_10, libero_90
     num_steps_wait: int = 10                         # Number of steps to wait for objects to stabilize in sim
     num_trials_per_task: int = 50                    # Number of rollouts per task
-
+    #################################################################################################################
+    # CALIBRATION - specific parameters
+    #################################################################################################################
+    # in each action there are 7 DOF, so the action calibration is done on all DOFs by applying action_calibration_type
+    # and the episode calibration is done on all actions by applying episode_calibration_type
+    action_calibration_type: str = "mul"      # how to calculate probabilities of each action. Options: mul, max, min, avg, perplexity,
+    episode_calibration_type: str = "mul"     # how to calculate probabilities of each episode. Options: mul, max, min, avg, perplexity,
     #################################################################################################################
     # Utils
     #################################################################################################################
@@ -131,7 +140,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
         processor = get_processor(cfg)
 
     # Initialize local logging
-    run_id = f"EVAL-{cfg.task_suite_name}-{cfg.model_family}-{DATE_TIME}"
+    run_id = f"Calibration-{cfg.action_calibration_type}-{cfg.episode_calibration_type}-{DATE_TIME}"
     if cfg.run_id_note is not None:
         run_id += f"--{cfg.run_id_note}"
     os.makedirs(cfg.local_log_dir, exist_ok=True)
@@ -139,13 +148,25 @@ def eval_libero(cfg: GenerateConfig) -> None:
     log_file = open(local_log_filepath, "w")
     print(f"Logging to local log file: {local_log_filepath}")
 
+    # add calibration dictionary results to csv
+    csv_file_path = os.path.join(cfg.local_log_dir, run_id + ".csv")
+    # Write calib_dict to CSV
+    with open(csv_file_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        # Write the header
+        writer.writerow(["episode_success", "episode_probs"])
+
+    print(f"Calibration results written to {csv_file_path}")
+
     # Initialize Weights & Biases logging as well
     if cfg.use_wandb:
-        wandb.init(
+        run = wandb.init(
             entity=cfg.wandb_entity,
             project=cfg.wandb_project,
             name=run_id,
         )
+        # run.define_metric("#steps", hidden=True)  # don't create a plot for "epoch"
+        # run.define_metric("#episodes", hidden=True)  # don't create a plot for "epoch"
 
     # Initialize LIBERO task suite
     benchmark_dict = benchmark.get_benchmark_dict()
@@ -171,6 +192,8 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
         # Start episodes
         task_episodes, task_successes = 0, 0
+        successes_ece = []
+        episode_probs_ece = []
         for episode_idx in tqdm.tqdm(range(cfg.num_trials_per_task)):
             print(f"\nTask: {task_description}")
             log_file.write(f"\nTask: {task_description}\n")
@@ -184,6 +207,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
             # Setup
             t = 0
             replay_images = []
+            action_probs_arr = []
             if cfg.task_suite_name == "libero_spatial":
                 max_steps = 220  # longest training demo has 193 steps
             elif cfg.task_suite_name == "libero_object":
@@ -209,9 +233,6 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     # Get preprocessed image
                     img = get_libero_image(obs, resize_size)
 
-                    # Save preprocessed image for replay video
-                    replay_images.append(img)
-
                     # Prepare observations dict
                     # Note: OpenVLA does not take proprio state as input
                     observation = {
@@ -221,14 +242,18 @@ def eval_libero(cfg: GenerateConfig) -> None:
                         ),
                     }
 
-                    # Query model to get action
-                    action = get_action(
+                    # Query model to get action and probabilities
+                    action, probs = get_action(
                         cfg,
                         model,
                         observation,
                         task_description,
                         processor=processor,
                     )
+
+                    # Save preprocessed image for replay video
+                    img = add_text_to_image(img, f"Probs: {probs}")
+                    replay_images.append(img)
 
                     # Normalize gripper action [0,1] -> [-1,+1] because the environment expects the latter
                     action = normalize_gripper_action(action, binarize=True)
@@ -238,6 +263,17 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     if cfg.model_family == "openvla":
                         action = invert_gripper_action(action)
 
+                    # process the probabilities
+                    action_prob = probs_for_calibration(probs, cfg.action_calibration_type)
+                    action_probs_arr.append(action_prob)
+                    if cfg.use_wandb and task_episodes % 3 == 0:
+                        wandb.log(
+                            {
+                                f"Calibration_action/{task_description}_episode_{task_episodes+1}": float(action_prob),
+                                "#steps": t,
+                            }
+                        )
+                    log_file.write(f"# action No {t} Probability: {action_prob})\n")
                     # Execute action in environment
                     obs, reward, done, info = env.step(action.tolist())
                     if done:
@@ -253,7 +289,11 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
             task_episodes += 1
             total_episodes += 1
-
+            # process total probability of the episode
+            episode_prob = probs_for_calibration(action_probs_arr, cfg.episode_calibration_type)
+            episode_probs_ece.append(episode_prob)
+            successes_ece.append(float(done))
+            ece = calculate_ece(episode_probs_ece, successes_ece)
             # Save a replay video of the episode
             save_rollout_video(
                 replay_images, total_episodes, success=done, task_description=task_description, log_file=log_file
@@ -261,12 +301,28 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
             # Log current results
             print(f"Success: {done}")
+            print(f"Episode probability: {episode_prob}")
+            print(f"ECE: {ece}")
             print(f"# episodes completed so far: {total_episodes}")
             print(f"# successes: {total_successes} ({total_successes / total_episodes * 100:.1f}%)")
             log_file.write(f"Success: {done}\n")
+            log_file.write(f"Episode probability: {episode_prob}\n")
             log_file.write(f"# episodes completed so far: {total_episodes}\n")
             log_file.write(f"# successes: {total_successes} ({total_successes / total_episodes * 100:.1f}%)\n")
             log_file.flush()
+            # Write results to CSV
+            with open(csv_file_path, mode='a', newline='') as file:
+                writer.writerow([done, episode_prob])
+
+            if cfg.use_wandb:
+                wandb.log(
+                    {
+                        f"Calibration_episode/{task_description}": float(episode_prob),
+                        f"Calibration_episode/success_rate_{task_description}": float(done),
+                        f"Evaluation/ECE_{task_description}": ece,
+                        "#episodes": total_episodes,
+                    }
+                )
 
         # Log final results
         print(f"Current task success rate: {float(task_successes) / float(task_episodes)}")
@@ -279,6 +335,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
                 {
                     f"success_rate/{task_description}": float(task_successes) / float(task_episodes),
                     f"num_episodes/{task_description}": task_episodes,
+                    "#episodes": total_episodes,
                 }
             )
 
@@ -301,4 +358,68 @@ if __name__ == "__main__":
         config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
     except FileNotFoundError:
         config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
-    eval_libero(config)
+    action_calibration_types = ["mul", "max", "min", "avg"]
+    episode_calibration_types = ["mul", "max", "min", "avg"]
+    for action_type in action_calibration_types:
+        for episode_type in episode_calibration_types:
+            config.action_calibration_type = action_type
+            config.episode_calibration_type = episode_type
+            eval_libero(config)
+
+
+## from https://github.com/google-research/google-research/blob/master/language_model_uncertainty/KnowNo_TabletopSim.ipynb
+# load from the csv the data
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# # load the data
+# dataset = pd.read_csv('data.csv')
+# #@markdown Then, get the non-conformity scores from the calibration set, which is 1 minus the likelihood of the **true** option,
+# def temperature_scaling(logits, temperature):
+#     logits = np.array(logits)
+#     logits /= temperature
+#
+#     # apply softmax
+#     logits -= logits.max()
+#     logits = logits - np.log(np.sum(np.exp(logits)))
+#     smx = np.exp(logits)
+#     return smx
+#
+# non_conformity_score = []
+# for data in dataset:
+#   top_logprobs = data['top_logprobs']
+#   top_tokens = data['top_tokens']
+#   true_options = data['true_options']
+#
+#   # normalize the five scores to sum of 1
+#   mc_smx_all = temperature_scaling(top_logprobs, temperature=5)
+#
+#   # get the softmax value of true option
+#   true_label_smx = [mc_smx_all[token_ind]
+#                     for token_ind, token in enumerate(top_tokens)
+#                     if token in true_options]
+#   true_label_smx = np.max(true_label_smx)
+#
+#   # get non-comformity score
+#   non_conformity_score.append(1 - true_label_smx)
+#   # find the quantile value qhat
+#   q_level = np.ceil((num_calibration + 1) * (1 - epsilon)) / num_calibration
+#   qhat = np.quantile(non_conformity_score, q_level, method='higher')
+#   print('Quantile value qhat:', qhat)
+#   print('')
+#
+#   # plot histogram and quantile
+#   plt.figure(figsize=(6, 2))
+#   plt.hist(non_conformity_score, bins=30, edgecolor='k', linewidth=1)
+#   plt.axvline(
+#       x=qhat, linestyle='--', color='r', label='Quantile value'
+#   )
+#   plt.title(
+#       'Histogram of non-comformity scores in the calibration set'
+#   )
+#   plt.xlabel('Non-comformity score')
+#   plt.legend();
+#   plt.show()
+#   print('')
+#   print('A good predictor should have low non-comformity scores, concentrated at the left side of the figure'

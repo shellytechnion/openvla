@@ -46,7 +46,8 @@ from experiments.robot.libero.libero_utils import (
     quat2axisangle,
     save_rollout_video,
 )
-from experiments.robot.openvla_utils import get_processor, add_text_to_image, probs_for_calibration, calculate_ece
+from experiments.robot.openvla_utils import (get_processor, add_text_to_image, probs_for_calibration, calculate_ece,
+                                             calculate_ece_on_results)
 from experiments.robot.robot_utils import (
     DATE_TIME,
     get_action,
@@ -154,16 +155,17 @@ def eval_libero(cfg: GenerateConfig) -> None:
     with open(csv_file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
         # Write the header
-        writer.writerow(["episode_success", "episode_probs"])
+        writer.writerow(["episode_success", "episode_probs", "task"])
 
     print(f"Calibration results written to {csv_file_path}")
 
     # Initialize Weights & Biases logging as well
     if cfg.use_wandb:
-        run = wandb.init(
+        wandb.init(
             entity=cfg.wandb_entity,
             project=cfg.wandb_project,
             name=run_id,
+            reinit=True
         )
         # run.define_metric("#steps", hidden=True)  # don't create a plot for "epoch"
         # run.define_metric("#episodes", hidden=True)  # don't create a plot for "epoch"
@@ -189,15 +191,13 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
         # Initialize LIBERO environment and task description
         env, task_description = get_libero_env(task, cfg.model_family, resolution=256)
-
+        print(f"\nTask: {task_description}")
+        log_file.write(f"\nTask: {task_description}\n")
         # Start episodes
         task_episodes, task_successes = 0, 0
         successes_ece = []
         episode_probs_ece = []
         for episode_idx in tqdm.tqdm(range(cfg.num_trials_per_task)):
-            print(f"\nTask: {task_description}")
-            log_file.write(f"\nTask: {task_description}\n")
-
             # Reset environment
             env.reset()
 
@@ -312,7 +312,8 @@ def eval_libero(cfg: GenerateConfig) -> None:
             log_file.flush()
             # Write results to CSV
             with open(csv_file_path, mode='a', newline='') as file:
-                writer.writerow([done, episode_prob])
+                writer = csv.writer(file)
+                writer.writerow([done, episode_prob, task_description])
 
             if cfg.use_wandb:
                 wandb.log(
@@ -351,30 +352,114 @@ def eval_libero(cfg: GenerateConfig) -> None:
             }
         )
         wandb.save(local_log_filepath)
+        # Finish the run
+        wandb.finish()
+
+def evaluate_results():
+    """
+    Evaluate the results of the calibration: train a classifier and calculate ECE and acuracy
+    """
+    ### train a classifier
+    import pandas as pd
+    import os
+    import glob
+    from sklearn.model_selection import train_test_split
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import accuracy_score
+
+    # Define the directory path
+    directory_path = '/mnt/pub/shellyf/tmp_openVLA/experiments/logs'
+
+    # Get a list of all CSV files in the directory
+    csv_files = glob.glob(os.path.join(directory_path, '*.csv'))
+    random_seeds = [1243, 7884, 83, 921, 423, 684, 781, 9, 1, 13702]
+    mul_list = {"ece": [], "accuracy": []}
+    max_list = {"ece": [], "accuracy": []}
+    min_list = {"ece": [], "accuracy": []}
+    avg_list = {"ece": [], "accuracy": []}
+    # Print the list of CSV files
+    for csv_file in csv_files:
+        for seed in random_seeds:
+            # if "Calibration-avg-mul" not in csv_file:
+            #     continue
+            # Load the dataset
+            dataset = pd.read_csv(csv_file)
+
+            # Extract features and labels
+            X = dataset[['episode_probs']].copy()  # Assuming 'episode_probs' is the feature
+            y = dataset['episode_success'].astype(int)  # Assuming 'episode_success' is the label
+            for i in range(X.shape[0]):
+                var = X.iloc[i, 0]
+                if var != 0:
+                    X.iloc[i, 0] = abs(np.log(X.iloc[i, 0])) # log empirically works better
+            # Split the data into training and testing sets
+            X_train, X_test, y_train, y_test = train_test_split(X.values.tolist(), y.values.tolist(), test_size=0.2,
+                                                                random_state=seed)
+
+            # Train a logistic regression classifier
+            clf = LogisticRegression()
+            clf.fit(X_train, y_train)
+
+            # Make predictions on the test set
+            y_pred = clf.predict(X_test)
+
+            # Calculate the accuracy of the classifier
+            accuracy = accuracy_score(y_test, y_pred)
+            if y_pred.max() - y_pred.min() == 0:
+                print(f"can't predict, Accuracy {csv_file.split(r'/')[-1]} : {accuracy:.2f}")
+                accuracy = 0
+                ece = 0
+            else:
+                save_name = csv_file.split(r'/')[-1].split(".")[0].replace("Calibration", "ECE") + f"_seed_{seed}.png"
+                ece = calculate_ece_on_results(np.array(X_test).squeeze(axis=1), y_test, save_name=save_name)
+                print(f"Accuracy {csv_file.split(r'/')[-1]} : {accuracy:.2f}, ECE: {ece:.2f}")
+            if "mul-2025" in csv_file:
+                mul_list["ece"].append(ece)
+                mul_list["accuracy"].append(accuracy)
+            elif "max-2025" in csv_file:
+                max_list["ece"].append(ece)
+                max_list["accuracy"].append(accuracy)
+            elif "min-2025" in csv_file:
+                min_list["ece"].append(ece)
+                min_list["accuracy"].append(accuracy)
+            elif "avg-2025" in csv_file:
+                avg_list["ece"].append(ece)
+                avg_list["accuracy"].append(accuracy)
+    print(f"mul_list avg Accuracy: {np.average(mul_list['accuracy'])}, ECE: {np.average(mul_list['ece'])}")
+    print(f"max_list avg Accuracy: {np.average(max_list['accuracy'])}, ECE: {np.average(max_list['ece'])}")
+    print(f"min_list avg Accuracy: {np.average(min_list['accuracy'])}, ECE: {np.average(min_list['ece'])}")
+    print(f"avg_list avg Accuracy: {np.average(avg_list['accuracy'])}, ECE: {np.average(avg_list['ece'])}")
 
 
 if __name__ == "__main__":
-    try:
-        config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
-    except FileNotFoundError:
-        config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
-    action_calibration_types = ["mul", "max", "min", "avg"]
-    episode_calibration_types = ["mul", "max", "min", "avg"]
-    for action_type in action_calibration_types:
-        for episode_type in episode_calibration_types:
-            config.action_calibration_type = action_type
-            config.episode_calibration_type = episode_type
-            eval_libero(config)
+
+    # os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+    # try:
+    #     config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
+    # except FileNotFoundError:
+    #     config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
+    # action_calibration_types = ["mul", "max", "min", "avg"]
+    # episode_calibration_types = ["mul", "max", "min", "avg"]
+    # for action_type in action_calibration_types:
+    #     for episode_type in episode_calibration_types:
+    #         config.action_calibration_type = action_type
+    #         config.episode_calibration_type = episode_type
+    #         eval_libero(config)
+
+    evaluate_results()
+
 
 
 ## from https://github.com/google-research/google-research/blob/master/language_model_uncertainty/KnowNo_TabletopSim.ipynb
 # load from the csv the data
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-
-# # load the data
-# dataset = pd.read_csv('data.csv')
+#     import pandas as pd
+#     import numpy as np
+#     import matplotlib.pyplot as plt
+#
+#     # # load the data
+#     dataset = pd.read_csv('/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-mul-mul-2025_01_02-10_59_53.csv')
+#
+#     calculate_ece(dataset['episode_success'], dataset['episode_probs'], num_bins=10)
 # #@markdown Then, get the non-conformity scores from the calibration set, which is 1 minus the likelihood of the **true** option,
 # def temperature_scaling(logits, temperature):
 #     logits = np.array(logits)

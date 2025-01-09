@@ -46,8 +46,8 @@ from experiments.robot.libero.libero_utils import (
     quat2axisangle,
     save_rollout_video,
 )
-from experiments.robot.openvla_utils import (get_processor, add_text_to_image, probs_for_calibration, calculate_ece,
-                                             calculate_ece_on_results)
+from experiments.robot.openvla_utils import (get_processor, add_text_to_image, probs_for_calibration, calculate_ece)
+from experiments.robot.calibration_utils import calculate_ece_on_results, calc_conformal_prediction
 from experiments.robot.robot_utils import (
     DATE_TIME,
     get_action,
@@ -377,11 +377,12 @@ def evaluate_results():
     max_list = {"ece": [], "accuracy": []}
     min_list = {"ece": [], "accuracy": []}
     avg_list = {"ece": [], "accuracy": []}
+    dataset = None
     # Print the list of CSV files
     for csv_file in csv_files:
         for seed in random_seeds:
-            # if "Calibration-avg-mul" not in csv_file:
-            #     continue
+            if "Calibration-avg-mul" not in csv_file:
+                continue
             # Load the dataset
             dataset = pd.read_csv(csv_file)
 
@@ -411,7 +412,7 @@ def evaluate_results():
                 ece = 0
             else:
                 save_name = csv_file.split(r'/')[-1].split(".")[0].replace("Calibration", "ECE") + f"_seed_{seed}.png"
-                ece = calculate_ece_on_results(np.array(X_test).squeeze(axis=1), y_test, save_name=save_name)
+                ece = calculate_ece_on_results(np.array(X_test).squeeze(axis=1), y_test, save_name=None)
                 print(f"Accuracy {csv_file.split(r'/')[-1]} : {accuracy:.2f}, ECE: {ece:.2f}")
             if "mul-2025" in csv_file:
                 mul_list["ece"].append(ece)
@@ -430,7 +431,6 @@ def evaluate_results():
     print(f"min_list avg Accuracy: {np.average(min_list['accuracy'])}, ECE: {np.average(min_list['ece'])}")
     print(f"avg_list avg Accuracy: {np.average(avg_list['accuracy'])}, ECE: {np.average(avg_list['ece'])}")
 
-
 if __name__ == "__main__":
 
     # os.environ['TOKENIZERS_PARALLELISM'] = 'false'
@@ -446,65 +446,10 @@ if __name__ == "__main__":
     #         config.episode_calibration_type = episode_type
     #         eval_libero(config)
 
-    evaluate_results()
+    # evaluate_results()
+    csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-min-mul-2025_01_02-14_51_33.csv"
+    calc_conformal_prediction(csv_path)
+    csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-avg-mul-2025_01_02-14_51_33.csv"
+    calc_conformal_prediction(csv_path)
 
 
-
-## from https://github.com/google-research/google-research/blob/master/language_model_uncertainty/KnowNo_TabletopSim.ipynb
-# load from the csv the data
-#     import pandas as pd
-#     import numpy as np
-#     import matplotlib.pyplot as plt
-#
-#     # # load the data
-#     dataset = pd.read_csv('/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-mul-mul-2025_01_02-10_59_53.csv')
-#
-#     calculate_ece(dataset['episode_success'], dataset['episode_probs'], num_bins=10)
-# #@markdown Then, get the non-conformity scores from the calibration set, which is 1 minus the likelihood of the **true** option,
-# def temperature_scaling(logits, temperature):
-#     logits = np.array(logits)
-#     logits /= temperature
-#
-#     # apply softmax
-#     logits -= logits.max()
-#     logits = logits - np.log(np.sum(np.exp(logits)))
-#     smx = np.exp(logits)
-#     return smx
-#
-# non_conformity_score = []
-# for data in dataset:
-#   top_logprobs = data['top_logprobs']
-#   top_tokens = data['top_tokens']
-#   true_options = data['true_options']
-#
-#   # normalize the five scores to sum of 1
-#   mc_smx_all = temperature_scaling(top_logprobs, temperature=5)
-#
-#   # get the softmax value of true option
-#   true_label_smx = [mc_smx_all[token_ind]
-#                     for token_ind, token in enumerate(top_tokens)
-#                     if token in true_options]
-#   true_label_smx = np.max(true_label_smx)
-#
-#   # get non-comformity score
-#   non_conformity_score.append(1 - true_label_smx)
-#   # find the quantile value qhat
-#   q_level = np.ceil((num_calibration + 1) * (1 - epsilon)) / num_calibration
-#   qhat = np.quantile(non_conformity_score, q_level, method='higher')
-#   print('Quantile value qhat:', qhat)
-#   print('')
-#
-#   # plot histogram and quantile
-#   plt.figure(figsize=(6, 2))
-#   plt.hist(non_conformity_score, bins=30, edgecolor='k', linewidth=1)
-#   plt.axvline(
-#       x=qhat, linestyle='--', color='r', label='Quantile value'
-#   )
-#   plt.title(
-#       'Histogram of non-comformity scores in the calibration set'
-#   )
-#   plt.xlabel('Non-comformity score')
-#   plt.legend();
-#   plt.show()
-#   print('')
-#   print('A good predictor should have low non-comformity scores, concentrated at the left side of the figure'

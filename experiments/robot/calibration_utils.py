@@ -8,7 +8,7 @@ def normalize_confidences(confidences):
     Normalize the confidences to be between 0 and 1.
     because the log probability is reversed (small prob -> high log and vice versa), we swap the order of the confidences
     """
-    if len(np.where(confidences == 0)) > 0:
+    if confidences.min() == 0:
         max_conf = max(confidences) + (max(confidences) - min(confidences)) / 10.0
         confidences = np.array([x if x != 0 else max_conf for x in confidences])
     # normalize the confidences to be between 0 and 1
@@ -85,7 +85,7 @@ def temperature_scaling(logits, temperature):
     smx = np.exp(logits)
     return smx
 
-def calc_conformal_prediction(csv_path):
+def calc_conformal_prediction(csv_path, q=0.95):
     ## from https://github.com/google-research/google-research/blob/master/language_model_uncertainty/KnowNo_TabletopSim.ipynb
     dataset = pd.read_csv(csv_path)
     # manipulate confidences to be between 0 and 1
@@ -101,34 +101,36 @@ def calc_conformal_prediction(csv_path):
     true_confidences_indices = np.where(np.array(dataset['episode_success'].astype(int)) == 1)
     true_confidences = confidences[true_confidences_indices]
     false_confidences = confidences[np.where(np.array(dataset['episode_success'].astype(int)) == 0)]
-    qhat = np.quantile(false_confidences, 0.95, method='lower')
-    print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat}')
+    qhat_false = np.quantile(false_confidences, q, method='lower')
+    qhat_true = np.quantile(true_confidences, 1-q, method='lower')
+    print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_false} for the false class')
+    print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_true} for the true class')
 
     # plot histogram and quantile
     import matplotlib.pyplot as plt
     plt.figure()
     plt.hist(false_confidences, bins=30, edgecolor='k', linewidth=1, align="left")
     plt.axvline(
-          x=qhat, linestyle='--', color='r', label='Quantile value'
+          x=qhat_false, linestyle='--', color='r', label='Quantile value'
       )
     plt.title(
-          f'q-value of the false class in {csv_path.split("Calibration-")[-1]} '
+          f'q-value of the false class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]} '
       )
     plt.xlabel('confidence score')
     plt.ylabel('frequency')
     plt.legend()
-    # plt.savefig(f'q-value of the false class in {csv_path.split("Calibration-")[-1].split(".")[0]}.png')
+    plt.savefig(f'q-value_{q} of the false class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
 
     plt.figure()
     plt.hist(true_confidences, bins=30, edgecolor='k', linewidth=1, align="left")
     plt.axvline(
-          x=qhat, linestyle='--', color='r', label='Quantile value'
+          x=qhat_true, linestyle='--', color='r', label='Quantile value'
       )
     plt.title(
-          f'q-value of the true class in {csv_path.split("Calibration-")[-1]}'
+          f'q-value of the true class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}'
       )
     plt.xlabel('confidence score')
     plt.ylabel('frequency')
     plt.legend()
-    # plt.savefig(f'q-value of the true class in {csv_path.split("Calibration-")[-1].split(".")[0]}.png')
+    plt.savefig(f'q-value_{q} of the true class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
     plt.show()

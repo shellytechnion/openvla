@@ -223,7 +223,7 @@ def calculate_ece(confidences, success_rate, num_bins=10):
     if len(success_rate) != len(confidences) :
         raise ValueError("Length of confidences, and ground_truth must be the same.")
     # Initialize bins
-    bin_boundaries = np.linspace(0, 1, num_bins + 1)
+    bin_boundaries = np.linspace(min(confidences), max(confidences), num_bins)
     bin_indices = np.digitize(confidences, bin_boundaries, right=False) - 1 # Adjust index to 0-based
     ece = 0.0
     empty_bins = 0

@@ -141,7 +141,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
         processor = get_processor(cfg)
 
     # Initialize local logging
-    run_id = f"Calibration-{cfg.action_calibration_type}-{cfg.episode_calibration_type}-{DATE_TIME}"
+    run_id = f"{cfg.task_suite_name}-action_{cfg.action_calibration_type}-episode_{cfg.episode_calibration_type}-{DATE_TIME}"
     if cfg.run_id_note is not None:
         run_id += f"--{cfg.run_id_note}"
     os.makedirs(cfg.local_log_dir, exist_ok=True)
@@ -273,6 +273,12 @@ def eval_libero(cfg: GenerateConfig) -> None:
                                 "#steps": t,
                             }
                         )
+                        wandb.log(
+                            {
+                                f"Calibration_action_episode/{task_description}_episode_{task_episodes+1}": float(probs_for_calibration(action_probs_arr, cfg.episode_calibration_type)),
+                                "#steps": t,
+                            }
+                        )
                     log_file.write(f"# action No {t} Probability: {action_prob})\n")
                     # Execute action in environment
                     obs, reward, done, info = env.step(action.tolist())
@@ -295,9 +301,10 @@ def eval_libero(cfg: GenerateConfig) -> None:
             successes_ece.append(float(done))
             ece = calculate_ece(episode_probs_ece, successes_ece)
             # Save a replay video of the episode
-            save_rollout_video(
-                replay_images, total_episodes, success=done, task_description=task_description, log_file=log_file
-            )
+            if episode_idx % 3 == 0:
+                save_rollout_video(
+                    replay_images, total_episodes, success=done, task_description=task_description, log_file=log_file
+                )
 
             # Log current results
             print(f"Success: {done}")
@@ -373,16 +380,20 @@ def evaluate_results():
     # Get a list of all CSV files in the directory
     csv_files = glob.glob(os.path.join(directory_path, '*.csv'))
     random_seeds = [1243, 7884, 83, 921, 423, 684, 781, 9, 1, 13702]
-    mul_list = {"ece": [], "accuracy": []}
-    max_list = {"ece": [], "accuracy": []}
-    min_list = {"ece": [], "accuracy": []}
-    avg_list = {"ece": [], "accuracy": []}
+
     dataset = None
     # Print the list of CSV files
     for csv_file in csv_files:
+        mul_list = {"ece": [], "accuracy": []}
+        max_list = {"ece": [], "accuracy": []}
+        min_list = {"ece": [], "accuracy": []}
+        avg_list = {"ece": [], "accuracy": []}
+        # if "libero_goal" not in csv_file:
+        #     continue
+        if "libero_goal-action_min-episode_mul-2025_01_09-22_41_45" not in csv_file: # or "libero_goal-action_min-episode_mul" not in csv_file:
+            continue
+        print(f"CSV file: {csv_file}")
         for seed in random_seeds:
-            if "Calibration-avg-mul" not in csv_file:
-                continue
             # Load the dataset
             dataset = pd.read_csv(csv_file)
 
@@ -411,8 +422,8 @@ def evaluate_results():
                 accuracy = 0
                 ece = 0
             else:
-                save_name = csv_file.split(r'/')[-1].split(".")[0].replace("Calibration", "ECE") + f"_seed_{seed}.png"
-                ece = calculate_ece_on_results(np.array(X_test).squeeze(axis=1), y_test, save_name=None)
+                save_name = "ECE_" + csv_file.split(r'/')[-1].split(".")[0] + f"_seed_{seed}.png"
+                ece = calculate_ece_on_results(np.array(X_test).squeeze(axis=1), y_test, save_name=save_name)
                 print(f"Accuracy {csv_file.split(r'/')[-1]} : {accuracy:.2f}, ECE: {ece:.2f}")
             if "mul-2025" in csv_file:
                 mul_list["ece"].append(ece)
@@ -426,30 +437,35 @@ def evaluate_results():
             elif "avg-2025" in csv_file:
                 avg_list["ece"].append(ece)
                 avg_list["accuracy"].append(accuracy)
-    print(f"mul_list avg Accuracy: {np.average(mul_list['accuracy'])}, ECE: {np.average(mul_list['ece'])}")
-    print(f"max_list avg Accuracy: {np.average(max_list['accuracy'])}, ECE: {np.average(max_list['ece'])}")
-    print(f"min_list avg Accuracy: {np.average(min_list['accuracy'])}, ECE: {np.average(min_list['ece'])}")
-    print(f"avg_list avg Accuracy: {np.average(avg_list['accuracy'])}, ECE: {np.average(avg_list['ece'])}")
+        print(f"mul_list avg Accuracy: {np.average(mul_list['accuracy'])}, ECE: {np.average(mul_list['ece'])}")
+        print(f"max_list avg Accuracy: {np.average(max_list['accuracy'])}, ECE: {np.average(max_list['ece'])}")
+        print(f"min_list avg Accuracy: {np.average(min_list['accuracy'])}, ECE: {np.average(min_list['ece'])}")
+        print(f"avg_list avg Accuracy: {np.average(avg_list['accuracy'])}, ECE: {np.average(avg_list['ece'])}")
 
 if __name__ == "__main__":
 
-    # os.environ['TOKENIZERS_PARALLELISM'] = 'false'
-    # try:
-    #     config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
-    # except FileNotFoundError:
-    #     config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
-    # action_calibration_types = ["mul", "max", "min", "avg"]
-    # episode_calibration_types = ["mul", "max", "min", "avg"]
-    # for action_type in action_calibration_types:
-    #     for episode_type in episode_calibration_types:
-    #         config.action_calibration_type = action_type
-    #         config.episode_calibration_type = episode_type
-    #         eval_libero(config)
-
+    # Step 1:
+    os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+    try:
+        config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
+    except FileNotFoundError:
+        print("file NOT FOUND !!")
+        config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
+    action_calibration_types = ["mul", "max", "min", "avg"]
+    episode_calibration_types = ["mul", "max", "min", "avg"]
+    for action_type in action_calibration_types:
+        for episode_type in episode_calibration_types:
+            config.action_calibration_type = action_type
+            config.episode_calibration_type = episode_type
+            eval_libero(config)
+    # step 2
     # evaluate_results()
-    csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-min-mul-2025_01_02-14_51_33.csv"
-    calc_conformal_prediction(csv_path)
-    csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-avg-mul-2025_01_02-14_51_33.csv"
-    calc_conformal_prediction(csv_path)
+    # step 3
+    # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_goal-action_min-episode_mul-2025_01_09-22_41_45.csv"
+    # calc_conformal_prediction(csv_path, q=0.9)
+    # calc_conformal_prediction(csv_path, q=0.95)
+    # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_goal-action_avg-episode_mul-2025_01_09-22_41_45.csv"
+    # calc_conformal_prediction(csv_path, q=0.9)
+    # calc_conformal_prediction(csv_path, q=0.95)
 
 

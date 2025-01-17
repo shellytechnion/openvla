@@ -301,9 +301,9 @@ def eval_libero(cfg: GenerateConfig) -> None:
             successes_ece.append(float(done))
             ece = calculate_ece(episode_probs_ece, successes_ece)
             # Save a replay video of the episode
-            if episode_idx % 3 == 0:
+            if task_episodes % 3 == 0:
                 save_rollout_video(
-                    replay_images, total_episodes, success=done, task_description=task_description, log_file=log_file
+                    replay_images, task_episodes, success=done, task_description=task_description + f'-action_{cfg.action_calibration_type}-episode_{cfg.episode_calibration_type}', log_file=log_file
                 )
 
             # Log current results
@@ -375,10 +375,10 @@ def evaluate_results():
     from sklearn.metrics import accuracy_score
 
     # Define the directory path
-    directory_path = '/mnt/pub/shellyf/tmp_openVLA/experiments/logs'
+    directory_path = '/mnt/pub/shellyf/tmp_openVLA/experiments/logs/'
 
     # Get a list of all CSV files in the directory
-    csv_files = glob.glob(os.path.join(directory_path, '*.csv'))
+    csv_files = glob.glob(os.path.join(directory_path, 'libero_object*.csv'))
     random_seeds = [1243, 7884, 83, 921, 423, 684, 781, 9, 1, 13702]
 
     dataset = None
@@ -390,8 +390,8 @@ def evaluate_results():
         avg_list = {"ece": [], "accuracy": []}
         # if "libero_goal" not in csv_file:
         #     continue
-        if "libero_goal-action_min-episode_mul-2025_01_09-22_41_45" not in csv_file: # or "libero_goal-action_min-episode_mul" not in csv_file:
-            continue
+        # if "libero_goal-action_min-episode_mul-2025_01_09-22_41_45" not in csv_file: # or "libero_goal-action_min-episode_mul" not in csv_file:
+        #     continue
         print(f"CSV file: {csv_file}")
         for seed in random_seeds:
             # Load the dataset
@@ -442,6 +442,25 @@ def evaluate_results():
         print(f"min_list avg Accuracy: {np.average(min_list['accuracy'])}, ECE: {np.average(min_list['ece'])}")
         print(f"avg_list avg Accuracy: {np.average(avg_list['accuracy'])}, ECE: {np.average(avg_list['ece'])}")
 
+def join_csvs(csv_files: list, directory_path: str):
+    import pandas as pd
+    import os
+    # Initialize an empty list to store DataFrames
+    dataframes = []
+
+    # Iterate over the list of CSV files and read each one into a DataFrame
+    for csv_file in csv_files:
+        df = pd.read_csv(csv_file)
+        dataframes.append(df)
+
+    # Concatenate all DataFrames into a single DataFrame
+    combined_df = pd.concat(dataframes, ignore_index=True)
+
+    # Save the combined DataFrame to a new CSV file
+    combined_csv_path = os.path.join(directory_path, 'combined_results_action_avg_episode_mul.csv')
+    combined_df.to_csv(combined_csv_path, index=False)
+    print(f"Combined CSV file saved to {combined_csv_path}")
+
 if __name__ == "__main__":
 
     # Step 1:
@@ -451,21 +470,34 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print("file NOT FOUND !!")
         config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
-    action_calibration_types = ["mul", "max", "min", "avg"]
+    action_calibration_types = ["min", "avg", "mul", "max"]
     episode_calibration_types = ["mul", "max", "min", "avg"]
     for action_type in action_calibration_types:
         for episode_type in episode_calibration_types:
+            config.use_wandb = False
             config.action_calibration_type = action_type
             config.episode_calibration_type = episode_type
             eval_libero(config)
     # step 2
-    # evaluate_results()
+    #evaluate_results()
     # step 3
+    # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-min-mul-2025_01_02-14_51_33.csv"
     # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_goal-action_min-episode_mul-2025_01_09-22_41_45.csv"
     # calc_conformal_prediction(csv_path, q=0.9)
     # calc_conformal_prediction(csv_path, q=0.95)
+    # # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-avg-mul-2025_01_02-14_51_33.csv"
     # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_goal-action_avg-episode_mul-2025_01_09-22_41_45.csv"
-    # calc_conformal_prediction(csv_path, q=0.9)
-    # calc_conformal_prediction(csv_path, q=0.95)
+    # csv_path = "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_object-action_avg-episode_mul-2025_01_11-19_00_46.csv"
+    # csv_files = ["/mnt/pub/shellyf/tmp_openVLA/experiments/logs/Calibration-avg-mul-2025_01_02-14_51_33.csv",
+    #              "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_goal-action_avg-episode_mul-2025_01_09-22_41_45.csv",
+    #              "/mnt/pub/shellyf/tmp_openVLA/experiments/logs/libero_object-action_avg-episode_mul-2025_01_11-19_00_46.csv"]
+    # directory_path = '/home/shellyf/Projects/openvla/'
+    # join_csvs(csv_files, directory_path)
+
+    csv_path = "/home/shellyf/Projects/openvla/combined_results_action_avg_episode_mul.csv"
+    calc_conformal_prediction(csv_path, q=0.9, save=False)
+    calc_conformal_prediction(csv_path, q=0.95, save=False)
+
+
 
 

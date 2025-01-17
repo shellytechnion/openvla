@@ -85,7 +85,7 @@ def temperature_scaling(logits, temperature):
     smx = np.exp(logits)
     return smx
 
-def calc_conformal_prediction(csv_path, q=0.95):
+def calc_conformal_prediction(csv_path, q=0.95, save=False):
     ## from https://github.com/google-research/google-research/blob/master/language_model_uncertainty/KnowNo_TabletopSim.ipynb
     dataset = pd.read_csv(csv_path)
     # manipulate confidences to be between 0 and 1
@@ -106,6 +106,26 @@ def calc_conformal_prediction(csv_path, q=0.95):
     print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_false} for the false class')
     print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_true} for the true class')
 
+    from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+    import matplotlib.pyplot as plt
+    class_names = [0, 1]
+    # Calculate false positives, true negatives, false negatives, and true positives
+    cm = confusion_matrix(np.ones_like(true_confidences), np.where(true_confidences > qhat_true, 1, 0))
+    cm1 = confusion_matrix(np.zeros_like(false_confidences), np.where(false_confidences <= qhat_true, 0, 1))
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm + cm1, display_labels=class_names)
+    disp.plot()
+    plt.title(f'Confusion Matrix of {q} q_hat = qhat_true')
+    plt.show()
+
+    cm2 = confusion_matrix(np.ones_like(true_confidences), np.where(true_confidences > qhat_false, 1, 0))
+    cm3 = confusion_matrix(np.zeros_like(false_confidences), np.where(false_confidences <= qhat_false, 0, 1))
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm2 + cm3, display_labels=class_names)
+    disp.plot()
+    plt.title(f'Confusion Matrix of {q} q_hat = qhat_false')
+    if save:
+        plt.savefig(f'Confusion Matrix of {q} q_hat = qhat_false {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
+    plt.show()
+
     # plot histogram and quantile
     import matplotlib.pyplot as plt
     plt.figure()
@@ -119,7 +139,8 @@ def calc_conformal_prediction(csv_path, q=0.95):
     plt.xlabel('confidence score')
     plt.ylabel('frequency')
     plt.legend()
-    plt.savefig(f'q-value_{q} of the false class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
+    if save:
+        plt.savefig(f'q-value_{q} of the false class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
 
     plt.figure()
     plt.hist(true_confidences, bins=30, edgecolor='k', linewidth=1, align="left")
@@ -132,5 +153,6 @@ def calc_conformal_prediction(csv_path, q=0.95):
     plt.xlabel('confidence score')
     plt.ylabel('frequency')
     plt.legend()
-    plt.savefig(f'q-value_{q} of the true class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
+    if save:
+        plt.savefig(f'q-value_{q} of the true class in {csv_path.split("experiments/logs/")[-1].split("-2025")[0]}.png')
     plt.show()

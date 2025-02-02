@@ -28,11 +28,12 @@ import draccus
 import numpy as np
 import tqdm
 import csv
-sys.path.append('/mnt/pub/shellyf/tmp_openVLA')
-sys.path.append('/mnt/pub/shellyf/tmp_openVLA/LIBERO')
+# sys.path.append('/mnt/pub/shellyf/tmp_openVLA')
+# sys.path.append('/mnt/pub/shellyf/tmp_openVLA/LIBERO')
 #sys.path.append("/home/shellyf/Projects/openvla")
 #sys.path.append("/home/shellyf/Projects/openvla/LIBERO")
-# sys.path.append("LIBERO")
+sys.path.append("/home/shelfr5/Projects/openvla")
+sys.path.append("/home/shelfr5/Projects/openvla/LIBERO")
 from libero.libero import benchmark
 
 import wandb
@@ -155,7 +156,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
     with open(csv_file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
         # Write the header
-        writer.writerow(["episode_success", "episode_probs", "task"])
+        writer.writerow(["task", "episode_index","time_step", "prob0", "prob1","prob2","prob3","prob4","prob5","prob6","success"])
 
     print(f"Calibration results written to {csv_file_path}")
 
@@ -251,7 +252,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
                         processor=processor,
                     )
 
-                    # Save preprocessed image for replay video
+                   # Save preprocessed image for replay video
                     img = add_text_to_image(img, f"Probs: {probs}")
                     replay_images.append(img)
 
@@ -264,24 +265,28 @@ def eval_libero(cfg: GenerateConfig) -> None:
                         action = invert_gripper_action(action)
 
                     # process the probabilities
-                    action_prob = probs_for_calibration(probs, cfg.action_calibration_type)
+                    # action_prob = probs_for_calibration(probs, cfg.action_calibration_type)
+                    action_prob = 1
                     action_probs_arr.append(action_prob)
                     if cfg.use_wandb and task_episodes % 3 == 0:
                         wandb.log(
                             {
-                                f"Calibration_action/{task_description}_episode_{task_episodes+1}": float(action_prob),
+                                f"Calibration_action/{task_description}_episode_{task_episodes}": float(action_prob),
                                 "#steps": t,
                             }
                         )
                         wandb.log(
                             {
-                                f"Calibration_action_episode/{task_description}_episode_{task_episodes+1}": float(probs_for_calibration(action_probs_arr, cfg.episode_calibration_type)),
+                                f"Calibration_action_episode/{task_description}_episode_{task_episodes}": float(probs_for_calibration(action_probs_arr, cfg.episode_calibration_type)),
                                 "#steps": t,
                             }
                         )
                     log_file.write(f"# action No {t} Probability: {action_prob})\n")
                     # Execute action in environment
                     obs, reward, done, info = env.step(action.tolist())
+                    with open(csv_file_path, mode='a', newline='') as file:
+                        writer = csv.writer(file)
+                        writer.writerow([task_description, episode_idx, t, *probs, done])
                     if done:
                         task_successes += 1
                         total_successes += 1
@@ -293,10 +298,10 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     log_file.write(f"Caught exception: {e}\n")
                     break
 
-            task_episodes += 1
-            total_episodes += 1
+
             # process total probability of the episode
-            episode_prob = probs_for_calibration(action_probs_arr, cfg.episode_calibration_type)
+            # episode_prob = probs_for_calibration(action_probs_arr, cfg.episode_calibration_type)
+            episode_prob = 1
             episode_probs_ece.append(episode_prob)
             successes_ece.append(float(done))
             ece = calculate_ece(episode_probs_ece, successes_ece)
@@ -310,17 +315,17 @@ def eval_libero(cfg: GenerateConfig) -> None:
             print(f"Success: {done}")
             print(f"Episode probability: {episode_prob}")
             print(f"ECE: {ece}")
-            print(f"# episodes completed so far: {total_episodes}")
-            print(f"# successes: {total_successes} ({total_successes / total_episodes * 100:.1f}%)")
+            print(f"# episodes completed so far: {total_episodes + 1}")
+            print(f"# successes: {total_successes} ({total_successes / (total_episodes + 1) * 100:.1f}%)")
             log_file.write(f"Success: {done}\n")
             log_file.write(f"Episode probability: {episode_prob}\n")
             log_file.write(f"# episodes completed so far: {total_episodes}\n")
-            log_file.write(f"# successes: {total_successes} ({total_successes / total_episodes * 100:.1f}%)\n")
+            log_file.write(f"# successes: {total_successes} ({total_successes / (total_episodes + 1) * 100:.1f}%)\n")
             log_file.flush()
             # Write results to CSV
-            with open(csv_file_path, mode='a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([done, episode_prob, task_description])
+            # with open(csv_file_path, mode='a', newline='') as file:
+            #     writer = csv.writer(file)
+            #     writer.writerow([done, episode_prob, task_description])
 
             if cfg.use_wandb:
                 wandb.log(
@@ -328,22 +333,24 @@ def eval_libero(cfg: GenerateConfig) -> None:
                         f"Calibration_episode/{task_description}": float(episode_prob),
                         f"Calibration_episode/success_rate_{task_description}": float(done),
                         f"Evaluation/ECE_{task_description}": ece,
-                        "#episodes": total_episodes,
+                        "#episodes": task_episodes,
                     }
                 )
+            task_episodes += 1
+            total_episodes += 1
 
         # Log final results
-        print(f"Current task success rate: {float(task_successes) / float(task_episodes)}")
-        print(f"Current total success rate: {float(total_successes) / float(total_episodes)}")
-        log_file.write(f"Current task success rate: {float(task_successes) / float(task_episodes)}\n")
-        log_file.write(f"Current total success rate: {float(total_successes) / float(total_episodes)}\n")
+        print(f"Current task success rate: {float(task_successes) / float(task_episodes + 1)}") # +1 to avoid division by zero
+        print(f"Current total success rate: {float(total_successes) / float(total_episodes + 1)}")
+        log_file.write(f"Current task success rate: {float(task_successes) / float(task_episodes + 1)}\n")
+        log_file.write(f"Current total success rate: {float(total_successes) / float(total_episodes + 1)}\n")
         log_file.flush()
         if cfg.use_wandb:
             wandb.log(
                 {
                     f"success_rate/{task_description}": float(task_successes) / float(task_episodes),
                     f"num_episodes/{task_description}": task_episodes,
-                    "#episodes": total_episodes,
+                    "#episodes": task_episodes,
                 }
             )
 
@@ -462,7 +469,11 @@ def join_csvs(csv_files: list, directory_path: str):
     print(f"Combined CSV file saved to {combined_csv_path}")
 
 if __name__ == "__main__":
-
+    """
+    Do you want to specify a custom path for the dataset folder? (Y/N): N
+    Initializing the default config file...
+    The following information is stored in the config file: /home/shelfr5/.libero/config.yaml
+    """
     # Step 1:
     os.environ['TOKENIZERS_PARALLELISM'] = 'false'
     try:
@@ -474,7 +485,7 @@ if __name__ == "__main__":
     episode_calibration_types = ["mul", "max", "min", "avg"]
     for action_type in action_calibration_types:
         for episode_type in episode_calibration_types:
-            config.use_wandb = False
+            # config.use_wandb = False
             config.action_calibration_type = action_type
             config.episode_calibration_type = episode_type
             eval_libero(config)

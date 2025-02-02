@@ -85,26 +85,33 @@ def temperature_scaling(logits, temperature):
     smx = np.exp(logits)
     return smx
 
-def calc_conformal_prediction(csv_path, q=0.95, save=False):
+def calc_conformal_prediction(csv_path, q=0.95, save=False, offline_confidences=None, offline_successes=None):
     ## from https://github.com/google-research/google-research/blob/master/language_model_uncertainty/KnowNo_TabletopSim.ipynb
-    dataset = pd.read_csv(csv_path)
-    # manipulate confidences to be between 0 and 1
-    confidences = np.array(dataset[['episode_probs']].copy().values.tolist()).squeeze(axis=1)
-    for i, var in enumerate(confidences):
-        if var != 0:
-            confidences[i] = abs(np.log(var))  # log empirically works better
-
-
+    if csv_path is not None:
+        dataset = pd.read_csv(csv_path)
+        # manipulate confidences to be between 0 and 1
+        confidences = np.array(dataset[['episode_probs']].copy().values.tolist()).squeeze(axis=1)
+        for i, var in enumerate(confidences):
+            if var != 0:
+                confidences[i] = abs(np.log(var))  # log empirically works better
+        true_confidences_indices = np.where(np.array(dataset['episode_success'].astype(int)) == 1)
+        false_confidences = confidences[np.where(np.array(dataset['episode_success'].astype(int)) == 0)]
+    else:
+        confidences = np.array(offline_confidences)
+        true_confidences_indices = np.where(np.array(offline_successes).astype(int) == 1)
+        false_confidences = confidences[np.where(np.array(offline_successes).astype(int) == 0)]
     # normalize the confidences to be between 0 and 1
     confidences = normalize_confidences(confidences)
 
-    true_confidences_indices = np.where(np.array(dataset['episode_success'].astype(int)) == 1)
     true_confidences = confidences[true_confidences_indices]
-    false_confidences = confidences[np.where(np.array(dataset['episode_success'].astype(int)) == 0)]
     qhat_false = np.quantile(false_confidences, q, method='lower')
     qhat_true = np.quantile(true_confidences, 1-q, method='lower')
-    print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_false} for the false class')
-    print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_true} for the true class')
+    if csv_path is not None:
+        print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_false} for the false class')
+        print(f'Quantile value qhat for {csv_path.split("Calibration-")[-1]}: {qhat_true} for the true class')
+    else:
+        print(f'Quantile value qhat for offline calibration: {qhat_false} for the false class')
+        print(f'Quantile value qhat for offline calibration: {qhat_true} for the true class')
 
     from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
     import matplotlib.pyplot as plt

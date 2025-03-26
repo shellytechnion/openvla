@@ -1,0 +1,901 @@
+episode_success,episode_probs,task
+True,2.7485485e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+False,7.3638774e-14,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,1.2916271e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,4.5288274e-07,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,1.7294687e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,8.289181e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,6.514615e-06,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,4.0328996e-06,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,8.99048e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,0.0017166986,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,5.135095e-08,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,0.0009682145,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,9.112055e-06,pick up the black bowl between the plate and the ramekin and place it on the plate
+False,3.2485864e-17,pick up the black bowl between the plate and the ramekin and place it on the plate
+False,1.7971930000000003e-17,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,4.2619035e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,5.2732154e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,0.0011734915,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,2.9507568e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+False,5.505913399999999e-23,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,0.0043155323,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,3.7173006e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,1.5275238e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,0.00017564846,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,2.7186687e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,0.0006684572,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,2.0029354e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,4.7455163e-08,pick up the black bowl between the plate and the ramekin and place it on the plate
+False,2.8837298000000005e-16,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,1.3234343e-05,pick up the black bowl between the plate and the ramekin and place it on the plate
+True,7.764202e-07,pick up the black bowl next to the ramekin and place it on the plate
+True,4.5210963e-05,pick up the black bowl next to the ramekin and place it on the plate
+True,1.5473696e-09,pick up the black bowl next to the ramekin and place it on the plate
+False,4.6584695e-18,pick up the black bowl next to the ramekin and place it on the plate
+True,7.5839193e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,4.5424404e-05,pick up the black bowl next to the ramekin and place it on the plate
+True,1.3780677e-05,pick up the black bowl next to the ramekin and place it on the plate
+True,9.51079e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,1.5533762e-05,pick up the black bowl next to the ramekin and place it on the plate
+False,1.9118585e-12,pick up the black bowl next to the ramekin and place it on the plate
+True,6.430171e-08,pick up the black bowl next to the ramekin and place it on the plate
+True,0.00011327794,pick up the black bowl next to the ramekin and place it on the plate
+True,1.399564e-05,pick up the black bowl next to the ramekin and place it on the plate
+True,3.3692257e-07,pick up the black bowl next to the ramekin and place it on the plate
+True,2.67738e-05,pick up the black bowl next to the ramekin and place it on the plate
+True,1.4551132e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,3.707253e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,3.3777708e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,3.6616077e-10,pick up the black bowl next to the ramekin and place it on the plate
+True,7.096612e-07,pick up the black bowl next to the ramekin and place it on the plate
+True,0.0036778136,pick up the black bowl next to the ramekin and place it on the plate
+True,2.8233515e-07,pick up the black bowl next to the ramekin and place it on the plate
+True,0.0016455721,pick up the black bowl next to the ramekin and place it on the plate
+True,0.00022080925,pick up the black bowl next to the ramekin and place it on the plate
+True,1.0048983e-08,pick up the black bowl next to the ramekin and place it on the plate
+True,9.31747e-07,pick up the black bowl next to the ramekin and place it on the plate
+True,6.5633567e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,4.40515e-06,pick up the black bowl next to the ramekin and place it on the plate
+True,6.134062e-05,pick up the black bowl next to the ramekin and place it on the plate
+True,7.3605693e-06,pick up the black bowl next to the ramekin and place it on the plate
+False,5.0579024e-17,pick up the black bowl from table center and place it on the plate
+True,1.1567071e-06,pick up the black bowl from table center and place it on the plate
+True,8.443479e-07,pick up the black bowl from table center and place it on the plate
+True,4.513641e-05,pick up the black bowl from table center and place it on the plate
+True,3.8935298e-07,pick up the black bowl from table center and place it on the plate
+True,2.8847979e-12,pick up the black bowl from table center and place it on the plate
+True,0.0048719295,pick up the black bowl from table center and place it on the plate
+True,3.2778001e-07,pick up the black bowl from table center and place it on the plate
+True,6.982904e-07,pick up the black bowl from table center and place it on the plate
+True,2.3706016e-06,pick up the black bowl from table center and place it on the plate
+True,1.6571657e-06,pick up the black bowl from table center and place it on the plate
+True,1.0044716e-09,pick up the black bowl from table center and place it on the plate
+True,0.0009007278,pick up the black bowl from table center and place it on the plate
+True,0.002411752,pick up the black bowl from table center and place it on the plate
+True,2.0539899e-06,pick up the black bowl from table center and place it on the plate
+True,2.4624322e-05,pick up the black bowl from table center and place it on the plate
+True,1.2247338e-06,pick up the black bowl from table center and place it on the plate
+True,3.600948e-07,pick up the black bowl from table center and place it on the plate
+True,2.1672744e-05,pick up the black bowl from table center and place it on the plate
+False,4.787803e-06,pick up the black bowl from table center and place it on the plate
+True,5.3298116e-08,pick up the black bowl from table center and place it on the plate
+True,3.4642824e-07,pick up the black bowl from table center and place it on the plate
+True,2.1392954e-05,pick up the black bowl from table center and place it on the plate
+True,1.4641843e-06,pick up the black bowl from table center and place it on the plate
+False,2.1967196000000002e-16,pick up the black bowl from table center and place it on the plate
+True,0.00013560143,pick up the black bowl from table center and place it on the plate
+True,1.1777266e-05,pick up the black bowl from table center and place it on the plate
+True,1.2357729e-05,pick up the black bowl from table center and place it on the plate
+True,9.4218643e-07,pick up the black bowl from table center and place it on the plate
+True,4.2058513e-05,pick up the black bowl from table center and place it on the plate
+True,0.0066679865,pick up the black bowl on the cookie box and place it on the plate
+False,3.8681163e-05,pick up the black bowl on the cookie box and place it on the plate
+True,9.212289e-05,pick up the black bowl on the cookie box and place it on the plate
+True,2.0669218e-05,pick up the black bowl on the cookie box and place it on the plate
+True,3.344079e-05,pick up the black bowl on the cookie box and place it on the plate
+True,0.00042951017,pick up the black bowl on the cookie box and place it on the plate
+True,0.0021892965,pick up the black bowl on the cookie box and place it on the plate
+True,0.00011662746,pick up the black bowl on the cookie box and place it on the plate
+True,5.7502116e-06,pick up the black bowl on the cookie box and place it on the plate
+True,1.7125141e-05,pick up the black bowl on the cookie box and place it on the plate
+True,5.6168454e-05,pick up the black bowl on the cookie box and place it on the plate
+True,0.003280455,pick up the black bowl on the cookie box and place it on the plate
+True,0.00092153845,pick up the black bowl on the cookie box and place it on the plate
+True,4.117021e-06,pick up the black bowl on the cookie box and place it on the plate
+True,2.8293818e-05,pick up the black bowl on the cookie box and place it on the plate
+True,7.20781e-05,pick up the black bowl on the cookie box and place it on the plate
+True,0.00018401732,pick up the black bowl on the cookie box and place it on the plate
+True,5.60682e-05,pick up the black bowl on the cookie box and place it on the plate
+True,4.994525e-05,pick up the black bowl on the cookie box and place it on the plate
+True,0.0002294812,pick up the black bowl on the cookie box and place it on the plate
+True,5.472125e-05,pick up the black bowl on the cookie box and place it on the plate
+True,0.0006932374,pick up the black bowl on the cookie box and place it on the plate
+True,6.1322376e-06,pick up the black bowl on the cookie box and place it on the plate
+True,8.169231e-05,pick up the black bowl on the cookie box and place it on the plate
+True,0.00047741595,pick up the black bowl on the cookie box and place it on the plate
+True,0.001410725,pick up the black bowl on the cookie box and place it on the plate
+True,0.00019886064,pick up the black bowl on the cookie box and place it on the plate
+True,0.00013497149,pick up the black bowl on the cookie box and place it on the plate
+True,0.0016669413,pick up the black bowl on the cookie box and place it on the plate
+True,0.00010279215,pick up the black bowl on the cookie box and place it on the plate
+True,2.7422152e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,1.4862122e-19,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,1.2368141e-18,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,3.057572e-17,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,4.5252022e-21,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,3.615893e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,4.5224024e-07,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,1.1458225e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,1.3445533e-07,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,3.7319686e-14,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,4.772124e-21,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,1.11205855e-14,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,5.295129e-09,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,4.0642433e-21,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,5.2972938e-17,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,9.10159e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,1.6396355e-10,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,4.035068e-09,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,8.358635e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,9.421917e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,1.9306930999999997e-18,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,9.9126964e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,4.4303917e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,5.691329e-09,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,4.75193e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,4.700728e-06,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,1.3252084e-06,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,1.1056433e-08,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,6.555068e-06,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+False,2.6437154e-17,pick up the black bowl in the top drawer of the wooden cabinet and place it on the plate
+True,0.0010667071,pick up the black bowl on the ramekin and place it on the plate
+True,1.7347153e-05,pick up the black bowl on the ramekin and place it on the plate
+True,0.00018008226,pick up the black bowl on the ramekin and place it on the plate
+True,1.9781184e-05,pick up the black bowl on the ramekin and place it on the plate
+True,1.3219975e-05,pick up the black bowl on the ramekin and place it on the plate
+True,8.692592e-06,pick up the black bowl on the ramekin and place it on the plate
+False,1.9246256e-14,pick up the black bowl on the ramekin and place it on the plate
+True,3.5118323e-06,pick up the black bowl on the ramekin and place it on the plate
+True,2.9953623e-07,pick up the black bowl on the ramekin and place it on the plate
+True,9.275401e-07,pick up the black bowl on the ramekin and place it on the plate
+True,8.981354e-05,pick up the black bowl on the ramekin and place it on the plate
+True,0.00010588954,pick up the black bowl on the ramekin and place it on the plate
+True,2.1129921e-05,pick up the black bowl on the ramekin and place it on the plate
+True,4.1776486e-05,pick up the black bowl on the ramekin and place it on the plate
+False,2.3518951e-18,pick up the black bowl on the ramekin and place it on the plate
+True,6.0210427e-06,pick up the black bowl on the ramekin and place it on the plate
+True,2.1267315e-06,pick up the black bowl on the ramekin and place it on the plate
+True,0.00013516835,pick up the black bowl on the ramekin and place it on the plate
+False,1.564579e-15,pick up the black bowl on the ramekin and place it on the plate
+False,1.28192e-15,pick up the black bowl on the ramekin and place it on the plate
+True,2.0734392e-06,pick up the black bowl on the ramekin and place it on the plate
+True,1.0083098e-05,pick up the black bowl on the ramekin and place it on the plate
+True,9.177405e-06,pick up the black bowl on the ramekin and place it on the plate
+True,3.4108754e-05,pick up the black bowl on the ramekin and place it on the plate
+True,3.1054124e-06,pick up the black bowl on the ramekin and place it on the plate
+True,1.8965403e-07,pick up the black bowl on the ramekin and place it on the plate
+False,7.6591026e-19,pick up the black bowl on the ramekin and place it on the plate
+True,7.0146797e-07,pick up the black bowl on the ramekin and place it on the plate
+True,1.5451917e-05,pick up the black bowl on the ramekin and place it on the plate
+True,2.140514e-08,pick up the black bowl on the ramekin and place it on the plate
+True,1.817503e-08,pick up the black bowl next to the cookie box and place it on the plate
+True,1.2784647e-06,pick up the black bowl next to the cookie box and place it on the plate
+True,6.087769e-06,pick up the black bowl next to the cookie box and place it on the plate
+True,1.08048155e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,1.4485943e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,1.5298752e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,6.840617e-08,pick up the black bowl next to the cookie box and place it on the plate
+True,0.00011939897,pick up the black bowl next to the cookie box and place it on the plate
+True,3.1050686e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,0.0001436891,pick up the black bowl next to the cookie box and place it on the plate
+True,1.4763237e-08,pick up the black bowl next to the cookie box and place it on the plate
+True,1.6878135e-05,pick up the black bowl next to the cookie box and place it on the plate
+True,1.3116382e-06,pick up the black bowl next to the cookie box and place it on the plate
+True,0.00017976383,pick up the black bowl next to the cookie box and place it on the plate
+True,4.152825e-08,pick up the black bowl next to the cookie box and place it on the plate
+True,4.976164e-06,pick up the black bowl next to the cookie box and place it on the plate
+False,5.7059656e-14,pick up the black bowl next to the cookie box and place it on the plate
+True,0.00021937811,pick up the black bowl next to the cookie box and place it on the plate
+True,2.7625836e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,5.3563e-06,pick up the black bowl next to the cookie box and place it on the plate
+True,3.3324187e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,3.950831e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,1.6470607e-05,pick up the black bowl next to the cookie box and place it on the plate
+True,1.4896702e-10,pick up the black bowl next to the cookie box and place it on the plate
+True,6.3058985e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,0.00019106033,pick up the black bowl next to the cookie box and place it on the plate
+True,1.2812197e-07,pick up the black bowl next to the cookie box and place it on the plate
+True,9.500852e-05,pick up the black bowl next to the cookie box and place it on the plate
+True,1.1459302e-06,pick up the black bowl next to the cookie box and place it on the plate
+True,5.304098e-09,pick up the black bowl next to the cookie box and place it on the plate
+True,2.0521258e-08,pick up the black bowl on the stove and place it on the plate
+True,2.0009436e-08,pick up the black bowl on the stove and place it on the plate
+True,2.1526991e-10,pick up the black bowl on the stove and place it on the plate
+True,5.5923244e-09,pick up the black bowl on the stove and place it on the plate
+True,1.4530042e-08,pick up the black bowl on the stove and place it on the plate
+True,1.4570256e-07,pick up the black bowl on the stove and place it on the plate
+True,7.5599855e-09,pick up the black bowl on the stove and place it on the plate
+True,4.7443584e-07,pick up the black bowl on the stove and place it on the plate
+True,3.6433065e-08,pick up the black bowl on the stove and place it on the plate
+False,9.217199e-19,pick up the black bowl on the stove and place it on the plate
+False,2.0740016e-19,pick up the black bowl on the stove and place it on the plate
+True,5.4392517e-09,pick up the black bowl on the stove and place it on the plate
+True,3.3468557e-05,pick up the black bowl on the stove and place it on the plate
+False,1.5102177e-17,pick up the black bowl on the stove and place it on the plate
+True,6.0611324e-06,pick up the black bowl on the stove and place it on the plate
+True,3.3088043e-06,pick up the black bowl on the stove and place it on the plate
+True,1.2689184e-09,pick up the black bowl on the stove and place it on the plate
+True,1.9713415e-11,pick up the black bowl on the stove and place it on the plate
+True,1.058862e-11,pick up the black bowl on the stove and place it on the plate
+True,6.6224066e-09,pick up the black bowl on the stove and place it on the plate
+False,3.659595e-11,pick up the black bowl on the stove and place it on the plate
+False,1.5717468000000002e-16,pick up the black bowl on the stove and place it on the plate
+False,3.3053454e-13,pick up the black bowl on the stove and place it on the plate
+False,1.1525417e-12,pick up the black bowl on the stove and place it on the plate
+True,2.2952933e-07,pick up the black bowl on the stove and place it on the plate
+True,1.1412172e-09,pick up the black bowl on the stove and place it on the plate
+True,2.7508536e-08,pick up the black bowl on the stove and place it on the plate
+True,1.9688749e-11,pick up the black bowl on the stove and place it on the plate
+True,2.3987282e-10,pick up the black bowl on the stove and place it on the plate
+True,8.424177e-09,pick up the black bowl on the stove and place it on the plate
+True,7.143502e-08,pick up the black bowl next to the plate and place it on the plate
+True,6.388968400000001e-16,pick up the black bowl next to the plate and place it on the plate
+False,2.5480847e-16,pick up the black bowl next to the plate and place it on the plate
+False,3.239906e-15,pick up the black bowl next to the plate and place it on the plate
+False,1.5513865e-17,pick up the black bowl next to the plate and place it on the plate
+True,1.8474564e-06,pick up the black bowl next to the plate and place it on the plate
+False,2.1785285e-17,pick up the black bowl next to the plate and place it on the plate
+True,5.442655e-06,pick up the black bowl next to the plate and place it on the plate
+True,1.3761397e-05,pick up the black bowl next to the plate and place it on the plate
+True,5.2955675e-06,pick up the black bowl next to the plate and place it on the plate
+True,6.428049e-07,pick up the black bowl next to the plate and place it on the plate
+True,1.0135437e-05,pick up the black bowl next to the plate and place it on the plate
+True,8.496382e-07,pick up the black bowl next to the plate and place it on the plate
+True,8.953812e-08,pick up the black bowl next to the plate and place it on the plate
+True,0.0059494697,pick up the black bowl next to the plate and place it on the plate
+True,2.9747671e-08,pick up the black bowl next to the plate and place it on the plate
+False,1.04788254e-10,pick up the black bowl next to the plate and place it on the plate
+True,3.0926028e-06,pick up the black bowl next to the plate and place it on the plate
+True,8.759526e-05,pick up the black bowl next to the plate and place it on the plate
+True,0.00016367197,pick up the black bowl next to the plate and place it on the plate
+False,1.6211575e-14,pick up the black bowl next to the plate and place it on the plate
+False,5.41786e-15,pick up the black bowl next to the plate and place it on the plate
+True,2.4546492e-07,pick up the black bowl next to the plate and place it on the plate
+True,1.14412956e-07,pick up the black bowl next to the plate and place it on the plate
+False,1.9141787e-18,pick up the black bowl next to the plate and place it on the plate
+True,5.85097e-06,pick up the black bowl next to the plate and place it on the plate
+False,1.2620406e-14,pick up the black bowl next to the plate and place it on the plate
+True,1.2933921e-07,pick up the black bowl next to the plate and place it on the plate
+False,3.2809874e-15,pick up the black bowl next to the plate and place it on the plate
+False,3.519408e-19,pick up the black bowl next to the plate and place it on the plate
+True,2.136472e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,9.664465e-10,pick up the black bowl on the wooden cabinet and place it on the plate
+True,2.7613222e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,1.8044929e-09,pick up the black bowl on the wooden cabinet and place it on the plate
+True,6.951175e-07,pick up the black bowl on the wooden cabinet and place it on the plate
+False,7.250231000000001e-17,pick up the black bowl on the wooden cabinet and place it on the plate
+True,3.363047e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+False,1.8215109e-18,pick up the black bowl on the wooden cabinet and place it on the plate
+False,3.1459102e-14,pick up the black bowl on the wooden cabinet and place it on the plate
+True,4.2419448e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,2.8928469e-06,pick up the black bowl on the wooden cabinet and place it on the plate
+True,5.746991e-07,pick up the black bowl on the wooden cabinet and place it on the plate
+False,4.617916e-24,pick up the black bowl on the wooden cabinet and place it on the plate
+True,5.7705576e-14,pick up the black bowl on the wooden cabinet and place it on the plate
+False,5.0452515e-17,pick up the black bowl on the wooden cabinet and place it on the plate
+True,3.849833e-09,pick up the black bowl on the wooden cabinet and place it on the plate
+True,3.786469e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,5.1257544e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+False,2.0234982e-11,pick up the black bowl on the wooden cabinet and place it on the plate
+False,1.2953233999999999e-19,pick up the black bowl on the wooden cabinet and place it on the plate
+True,3.2258935e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,2.0929534e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,6.628972e-05,pick up the black bowl on the wooden cabinet and place it on the plate
+True,1.1967158e-07,pick up the black bowl on the wooden cabinet and place it on the plate
+True,6.915633e-10,pick up the black bowl on the wooden cabinet and place it on the plate
+True,1.9005762e-05,pick up the black bowl on the wooden cabinet and place it on the plate
+True,2.430436e-08,pick up the black bowl on the wooden cabinet and place it on the plate
+True,4.9216752e-11,pick up the black bowl on the wooden cabinet and place it on the plate
+True,5.721598e-07,pick up the black bowl on the wooden cabinet and place it on the plate
+False,2.8015318e-15,pick up the black bowl on the wooden cabinet and place it on the plate
+True,2.551151e-08,open the middle drawer of the cabinet
+False,9.548567e-22,open the middle drawer of the cabinet
+False,5.209682e-14,open the middle drawer of the cabinet
+True,2.0950695e-07,open the middle drawer of the cabinet
+True,1.4316645e-09,open the middle drawer of the cabinet
+True,3.9296515e-13,open the middle drawer of the cabinet
+True,8.3199114e-11,open the middle drawer of the cabinet
+True,1.9061684e-06,open the middle drawer of the cabinet
+True,1.6527636e-12,open the middle drawer of the cabinet
+False,1.8627411000000002e-26,open the middle drawer of the cabinet
+True,5.437338e-10,open the middle drawer of the cabinet
+True,1.6939743e-10,open the middle drawer of the cabinet
+True,7.232456e-11,open the middle drawer of the cabinet
+False,1.9311634e-21,open the middle drawer of the cabinet
+True,9.8988785e-05,open the middle drawer of the cabinet
+True,8.6091944e-20,open the middle drawer of the cabinet
+False,9.623842e-22,open the middle drawer of the cabinet
+False,9.1734224e-23,open the middle drawer of the cabinet
+True,2.244449e-05,open the middle drawer of the cabinet
+False,2.2460508e-26,open the middle drawer of the cabinet
+False,1.1249768e-10,open the middle drawer of the cabinet
+True,7.8839574e-10,open the middle drawer of the cabinet
+True,4.8506504e-06,open the middle drawer of the cabinet
+True,1.7560184e-06,open the middle drawer of the cabinet
+True,9.995332e-05,open the middle drawer of the cabinet
+False,5.3014505e-15,open the middle drawer of the cabinet
+False,6.419806e-23,open the middle drawer of the cabinet
+True,4.509713e-06,open the middle drawer of the cabinet
+True,1.711334e-09,open the middle drawer of the cabinet
+False,2.8044492e-26,open the middle drawer of the cabinet
+True,7.337217e-05,put the bowl on the stove
+True,3.448884e-08,put the bowl on the stove
+True,3.2882344e-06,put the bowl on the stove
+True,5.9320886e-05,put the bowl on the stove
+True,3.889387e-05,put the bowl on the stove
+True,4.7698027e-06,put the bowl on the stove
+True,1.4265252e-07,put the bowl on the stove
+True,0.00017283461,put the bowl on the stove
+True,9.60222e-05,put the bowl on the stove
+True,0.00046392385,put the bowl on the stove
+True,3.7276957e-05,put the bowl on the stove
+True,2.0622761e-05,put the bowl on the stove
+False,2.3585785e-07,put the bowl on the stove
+True,2.7262913e-06,put the bowl on the stove
+True,3.6995458e-05,put the bowl on the stove
+True,4.208781e-06,put the bowl on the stove
+True,7.679319e-05,put the bowl on the stove
+True,1.2909002e-06,put the bowl on the stove
+True,9.2410687e-07,put the bowl on the stove
+True,2.514938e-05,put the bowl on the stove
+True,3.3073447e-05,put the bowl on the stove
+True,0.0032819824,put the bowl on the stove
+True,1.6627073e-06,put the bowl on the stove
+True,1.6389276e-07,put the bowl on the stove
+True,5.758199e-06,put the bowl on the stove
+True,2.0600467e-06,put the bowl on the stove
+True,2.9794739e-05,put the bowl on the stove
+True,1.0308696e-05,put the bowl on the stove
+True,1.3321236e-05,put the bowl on the stove
+True,6.326413e-05,put the bowl on the stove
+True,1.4692265e-05,put the wine bottle on top of the cabinet
+True,0.000115934105,put the wine bottle on top of the cabinet
+True,1.9590245e-06,put the wine bottle on top of the cabinet
+True,2.649288e-07,put the wine bottle on top of the cabinet
+True,6.053823e-05,put the wine bottle on top of the cabinet
+True,6.7182127e-06,put the wine bottle on top of the cabinet
+True,6.217873e-05,put the wine bottle on top of the cabinet
+True,7.650891e-06,put the wine bottle on top of the cabinet
+False,4.762978e-09,put the wine bottle on top of the cabinet
+True,4.392191e-06,put the wine bottle on top of the cabinet
+True,2.3181e-05,put the wine bottle on top of the cabinet
+True,0.0045198547,put the wine bottle on top of the cabinet
+True,1.2506909e-05,put the wine bottle on top of the cabinet
+True,1.7376935e-07,put the wine bottle on top of the cabinet
+True,4.1986208e-05,put the wine bottle on top of the cabinet
+True,2.5455696e-10,put the wine bottle on top of the cabinet
+True,1.8326473e-07,put the wine bottle on top of the cabinet
+False,1.3194063499999998e-17,put the wine bottle on top of the cabinet
+True,1.5608961e-08,put the wine bottle on top of the cabinet
+True,3.6995054e-05,put the wine bottle on top of the cabinet
+True,4.362118e-07,put the wine bottle on top of the cabinet
+True,5.213835e-07,put the wine bottle on top of the cabinet
+False,2.5917404e-10,put the wine bottle on top of the cabinet
+False,5.2888034e-08,put the wine bottle on top of the cabinet
+True,4.5097164e-05,put the wine bottle on top of the cabinet
+True,5.298938e-05,put the wine bottle on top of the cabinet
+True,1.1082165e-08,put the wine bottle on top of the cabinet
+False,3.3718157000000004e-22,put the wine bottle on top of the cabinet
+False,2.9253275e-08,put the wine bottle on top of the cabinet
+True,1.1483443e-05,put the wine bottle on top of the cabinet
+False,1.08313736e-16,open the top drawer and put the bowl inside
+True,1.3332795e-10,open the top drawer and put the bowl inside
+True,1.890537e-10,open the top drawer and put the bowl inside
+True,5.7095257e-09,open the top drawer and put the bowl inside
+False,8.180651e-21,open the top drawer and put the bowl inside
+False,2.964305e-20,open the top drawer and put the bowl inside
+False,1.3883593e-19,open the top drawer and put the bowl inside
+False,2.0044747e-21,open the top drawer and put the bowl inside
+False,4.9548704e-22,open the top drawer and put the bowl inside
+True,1.4110616e-09,open the top drawer and put the bowl inside
+True,7.21632e-08,open the top drawer and put the bowl inside
+True,7.4103887e-09,open the top drawer and put the bowl inside
+True,1.35661855e-11,open the top drawer and put the bowl inside
+True,5.8826375e-09,open the top drawer and put the bowl inside
+True,5.2116302e-05,open the top drawer and put the bowl inside
+True,3.9694125e-12,open the top drawer and put the bowl inside
+False,3.7566808e-20,open the top drawer and put the bowl inside
+False,5.9279906e-23,open the top drawer and put the bowl inside
+True,1.2553116e-11,open the top drawer and put the bowl inside
+False,1.2331244e-23,open the top drawer and put the bowl inside
+False,3.9642820000000003e-25,open the top drawer and put the bowl inside
+True,5.3294515e-09,open the top drawer and put the bowl inside
+False,1.4262198e-23,open the top drawer and put the bowl inside
+True,6.6222583e-09,open the top drawer and put the bowl inside
+True,8.790121e-09,open the top drawer and put the bowl inside
+True,2.7998446e-09,open the top drawer and put the bowl inside
+True,5.289231e-08,open the top drawer and put the bowl inside
+True,7.232119e-13,open the top drawer and put the bowl inside
+False,1.1379688e-20,open the top drawer and put the bowl inside
+False,8.962546e-22,open the top drawer and put the bowl inside
+False,7.081873e-27,put the bowl on top of the cabinet
+True,5.953477e-11,put the bowl on top of the cabinet
+True,1.9120298e-05,put the bowl on top of the cabinet
+True,6.205226e-06,put the bowl on top of the cabinet
+True,1.1225941e-05,put the bowl on top of the cabinet
+True,4.9190558e-06,put the bowl on top of the cabinet
+True,1.1581003e-05,put the bowl on top of the cabinet
+True,2.2904592e-06,put the bowl on top of the cabinet
+True,0.00019259758,put the bowl on top of the cabinet
+True,5.4379966e-06,put the bowl on top of the cabinet
+True,2.582649e-05,put the bowl on top of the cabinet
+True,1.2962329e-05,put the bowl on top of the cabinet
+True,0.005202193,put the bowl on top of the cabinet
+True,6.9258435e-06,put the bowl on top of the cabinet
+True,1.2107561e-10,put the bowl on top of the cabinet
+True,6.7595897e-06,put the bowl on top of the cabinet
+True,8.1774284e-05,put the bowl on top of the cabinet
+True,5.345198e-06,put the bowl on top of the cabinet
+True,2.2535153e-06,put the bowl on top of the cabinet
+True,1.9329566e-06,put the bowl on top of the cabinet
+True,2.0134781e-05,put the bowl on top of the cabinet
+True,1.3989023e-11,put the bowl on top of the cabinet
+True,0.00027123105,put the bowl on top of the cabinet
+False,8.1334576e-20,put the bowl on top of the cabinet
+True,6.374333e-05,put the bowl on top of the cabinet
+False,2.2703508e-12,put the bowl on top of the cabinet
+True,0.00017238344,put the bowl on top of the cabinet
+True,4.761991e-06,put the bowl on top of the cabinet
+False,0.0025562732,put the bowl on top of the cabinet
+True,8.751016e-06,put the bowl on top of the cabinet
+True,3.2281334e-06,push the plate to the front of the stove
+True,1.0127728e-06,push the plate to the front of the stove
+True,6.1840643e-07,push the plate to the front of the stove
+True,3.0899944e-06,push the plate to the front of the stove
+True,1.3032476e-06,push the plate to the front of the stove
+True,8.2746016e-07,push the plate to the front of the stove
+True,7.037678e-05,push the plate to the front of the stove
+False,4.719684000000001e-28,push the plate to the front of the stove
+False,0.0003912053,push the plate to the front of the stove
+True,4.7261213e-07,push the plate to the front of the stove
+True,6.258631e-08,push the plate to the front of the stove
+True,1.0080174e-06,push the plate to the front of the stove
+True,9.527705e-12,push the plate to the front of the stove
+False,3.360769e-25,push the plate to the front of the stove
+True,7.769995e-05,push the plate to the front of the stove
+False,7.202448e-21,push the plate to the front of the stove
+True,1.2664894e-07,push the plate to the front of the stove
+True,5.0700297e-08,push the plate to the front of the stove
+True,2.9209941e-06,push the plate to the front of the stove
+False,2.0895273999999998e-23,push the plate to the front of the stove
+True,5.1716704e-13,push the plate to the front of the stove
+True,4.911205e-05,push the plate to the front of the stove
+True,8.596292e-08,push the plate to the front of the stove
+False,1.1012653000000002e-22,push the plate to the front of the stove
+True,5.015569e-18,push the plate to the front of the stove
+False,1.5449500999999998e-18,push the plate to the front of the stove
+True,6.393139e-05,push the plate to the front of the stove
+True,7.730415e-10,push the plate to the front of the stove
+False,5.0037803e-20,push the plate to the front of the stove
+True,2.8044408e-08,push the plate to the front of the stove
+False,2.9919996e-17,put the cream cheese in the bowl
+False,2.4302685e-10,put the cream cheese in the bowl
+False,9.3947175e-21,put the cream cheese in the bowl
+True,2.3069585e-08,put the cream cheese in the bowl
+False,3.4823144e-14,put the cream cheese in the bowl
+False,7.231916e-12,put the cream cheese in the bowl
+False,6.875408e-10,put the cream cheese in the bowl
+True,5.390322e-06,put the cream cheese in the bowl
+True,2.2477905e-06,put the cream cheese in the bowl
+True,0.00019765008,put the cream cheese in the bowl
+True,0.0012409659,put the cream cheese in the bowl
+True,7.715094e-06,put the cream cheese in the bowl
+True,3.8206167e-06,put the cream cheese in the bowl
+True,6.1698806e-06,put the cream cheese in the bowl
+False,3.341217e-19,put the cream cheese in the bowl
+False,0.009940859,put the cream cheese in the bowl
+True,5.624637e-08,put the cream cheese in the bowl
+True,2.8799562e-08,put the cream cheese in the bowl
+False,2.940478e-09,put the cream cheese in the bowl
+True,0.00198405,put the cream cheese in the bowl
+True,7.509443e-06,put the cream cheese in the bowl
+True,1.4483691e-06,put the cream cheese in the bowl
+False,1.5411263e-21,put the cream cheese in the bowl
+False,5.2777768e-08,put the cream cheese in the bowl
+False,3.1388966e-21,put the cream cheese in the bowl
+True,9.729186e-05,put the cream cheese in the bowl
+True,0.0053839986,put the cream cheese in the bowl
+True,1.942906e-10,put the cream cheese in the bowl
+True,0.00037780698,put the cream cheese in the bowl
+True,1.1157371e-06,put the cream cheese in the bowl
+True,1.1397157e-05,turn on the stove
+True,1.3026916e-05,turn on the stove
+False,4.00916e-06,turn on the stove
+True,0.0019403981,turn on the stove
+True,0.0006075598,turn on the stove
+True,3.7773768e-06,turn on the stove
+True,0.00014977742,turn on the stove
+True,8.210549e-07,turn on the stove
+True,0.008362179,turn on the stove
+True,5.7236542e-05,turn on the stove
+True,0.001136802,turn on the stove
+True,0.0004959059,turn on the stove
+True,0.0045460043,turn on the stove
+True,0.0005523122,turn on the stove
+True,0.000835388,turn on the stove
+True,0.006575857,turn on the stove
+True,0.00077174307,turn on the stove
+True,0.019646239,turn on the stove
+True,0.00038541778,turn on the stove
+True,0.00034079474,turn on the stove
+True,0.0010795604,turn on the stove
+True,0.0022668282,turn on the stove
+True,0.00020145065,turn on the stove
+True,0.081660256,turn on the stove
+True,0.0068310215,turn on the stove
+True,1.4913641e-05,turn on the stove
+True,0.0008065786,turn on the stove
+True,0.00042510193,turn on the stove
+True,2.2119091e-05,turn on the stove
+True,0.00062362343,turn on the stove
+True,4.2115927e-05,put the bowl on the plate
+True,0.00013925026,put the bowl on the plate
+True,0.00013318668,put the bowl on the plate
+True,3.0500496e-06,put the bowl on the plate
+True,8.914845e-05,put the bowl on the plate
+True,7.606529e-05,put the bowl on the plate
+True,0.00039004916,put the bowl on the plate
+True,0.00022178778,put the bowl on the plate
+True,1.9573245e-05,put the bowl on the plate
+True,5.133864e-05,put the bowl on the plate
+True,1.7899152e-05,put the bowl on the plate
+True,3.710514e-06,put the bowl on the plate
+True,1.3818385e-06,put the bowl on the plate
+False,1.5024142e-15,put the bowl on the plate
+False,1.72959e-21,put the bowl on the plate
+True,1.1438724e-05,put the bowl on the plate
+False,1.2950811e-14,put the bowl on the plate
+True,1.26109335e-05,put the bowl on the plate
+True,9.5763775e-05,put the bowl on the plate
+True,2.305937e-05,put the bowl on the plate
+True,0.00025882793,put the bowl on the plate
+True,1.199727e-05,put the bowl on the plate
+True,0.0008337254,put the bowl on the plate
+True,1.7560305e-05,put the bowl on the plate
+True,0.00014007943,put the bowl on the plate
+True,0.0004709411,put the bowl on the plate
+True,0.00030600282,put the bowl on the plate
+True,1.8237067e-06,put the bowl on the plate
+True,0.00011134243,put the bowl on the plate
+True,2.7779893e-06,put the bowl on the plate
+True,3.1576425e-17,put the wine bottle on the rack
+False,7.1960046e-12,put the wine bottle on the rack
+True,2.0016229e-08,put the wine bottle on the rack
+True,2.4497984e-08,put the wine bottle on the rack
+True,3.894362e-08,put the wine bottle on the rack
+True,1.186413e-10,put the wine bottle on the rack
+False,8.4056392999999995e-19,put the wine bottle on the rack
+True,5.4805147e-09,put the wine bottle on the rack
+True,2.2193653e-11,put the wine bottle on the rack
+False,3.734361e-12,put the wine bottle on the rack
+True,1.3267256e-11,put the wine bottle on the rack
+False,4.5735807e-10,put the wine bottle on the rack
+False,1.02241705e-14,put the wine bottle on the rack
+True,3.2079558e-10,put the wine bottle on the rack
+True,8.932471e-11,put the wine bottle on the rack
+False,1.562822e-24,put the wine bottle on the rack
+True,1.2315687e-08,put the wine bottle on the rack
+False,7.366210600000001e-21,put the wine bottle on the rack
+False,1.7162948e-25,put the wine bottle on the rack
+True,1.8213356e-14,put the wine bottle on the rack
+True,1.909529e-12,put the wine bottle on the rack
+False,1.0891062e-26,put the wine bottle on the rack
+True,1.58165e-10,put the wine bottle on the rack
+True,8.714409e-09,put the wine bottle on the rack
+False,5.977361e-05,put the wine bottle on the rack
+True,4.122059e-08,put the wine bottle on the rack
+False,2.85637e-16,put the wine bottle on the rack
+False,8.882757e-08,put the wine bottle on the rack
+True,3.142504e-07,put the wine bottle on the rack
+True,3.3563134999999996e-18,put the wine bottle on the rack
+True,1.8996789e-06,pick up the alphabet soup and place it in the basket
+True,1.0303399e-05,pick up the alphabet soup and place it in the basket
+True,3.8850635e-06,pick up the alphabet soup and place it in the basket
+True,2.7316435e-07,pick up the alphabet soup and place it in the basket
+True,2.2449561e-07,pick up the alphabet soup and place it in the basket
+True,7.879903e-09,pick up the alphabet soup and place it in the basket
+True,1.4667085e-05,pick up the alphabet soup and place it in the basket
+True,0.0012340306,pick up the alphabet soup and place it in the basket
+True,0.00048066291,pick up the alphabet soup and place it in the basket
+True,3.6564357e-05,pick up the alphabet soup and place it in the basket
+True,1.9687903e-05,pick up the alphabet soup and place it in the basket
+True,0.006002209,pick up the alphabet soup and place it in the basket
+True,1.6410908e-05,pick up the alphabet soup and place it in the basket
+True,2.560618e-10,pick up the alphabet soup and place it in the basket
+True,0.020250857,pick up the alphabet soup and place it in the basket
+True,7.125697e-05,pick up the alphabet soup and place it in the basket
+True,0.00022383092,pick up the alphabet soup and place it in the basket
+True,6.1542865e-10,pick up the alphabet soup and place it in the basket
+True,0.012235943,pick up the alphabet soup and place it in the basket
+True,1.03071564e-07,pick up the alphabet soup and place it in the basket
+True,9.044427e-06,pick up the alphabet soup and place it in the basket
+True,5.271806e-10,pick up the alphabet soup and place it in the basket
+True,2.8717561e-11,pick up the alphabet soup and place it in the basket
+True,0.0003990195,pick up the alphabet soup and place it in the basket
+True,0.004629822,pick up the alphabet soup and place it in the basket
+False,3.182e-16,pick up the alphabet soup and place it in the basket
+True,5.7762554e-05,pick up the alphabet soup and place it in the basket
+True,9.066748e-09,pick up the alphabet soup and place it in the basket
+True,0.008018253,pick up the alphabet soup and place it in the basket
+True,7.010011e-11,pick up the alphabet soup and place it in the basket
+False,3.2567289e-12,pick up the cream cheese and place it in the basket
+False,2.8363155e-16,pick up the cream cheese and place it in the basket
+True,4.305083e-05,pick up the cream cheese and place it in the basket
+False,1.4154458000000002e-17,pick up the cream cheese and place it in the basket
+True,0.020406583,pick up the cream cheese and place it in the basket
+True,2.8518886e-15,pick up the cream cheese and place it in the basket
+True,0.00011905697,pick up the cream cheese and place it in the basket
+True,0.000121951045,pick up the cream cheese and place it in the basket
+True,0.0024583614,pick up the cream cheese and place it in the basket
+True,3.5671645e-05,pick up the cream cheese and place it in the basket
+True,9.688546e-09,pick up the cream cheese and place it in the basket
+True,7.0365146e-05,pick up the cream cheese and place it in the basket
+True,5.1050043e-11,pick up the cream cheese and place it in the basket
+True,0.0017793878,pick up the cream cheese and place it in the basket
+False,2.1790385e-10,pick up the cream cheese and place it in the basket
+True,0.014001934,pick up the cream cheese and place it in the basket
+True,6.374081e-07,pick up the cream cheese and place it in the basket
+True,7.7470176e-08,pick up the cream cheese and place it in the basket
+True,0.00020181086,pick up the cream cheese and place it in the basket
+False,9.531573e-12,pick up the cream cheese and place it in the basket
+True,0.00021650078,pick up the cream cheese and place it in the basket
+True,4.459148e-09,pick up the cream cheese and place it in the basket
+True,7.442337e-05,pick up the cream cheese and place it in the basket
+True,3.1800602e-05,pick up the cream cheese and place it in the basket
+True,0.00076211966,pick up the cream cheese and place it in the basket
+True,2.0794369e-06,pick up the cream cheese and place it in the basket
+True,1.629873e-07,pick up the cream cheese and place it in the basket
+True,1.338748e-08,pick up the cream cheese and place it in the basket
+True,1.450699e-05,pick up the cream cheese and place it in the basket
+True,1.5548001e-06,pick up the cream cheese and place it in the basket
+True,2.352923e-06,pick up the salad dressing and place it in the basket
+True,0.008097631,pick up the salad dressing and place it in the basket
+True,0.114327915,pick up the salad dressing and place it in the basket
+True,0.03487964,pick up the salad dressing and place it in the basket
+True,8.9025285e-08,pick up the salad dressing and place it in the basket
+True,0.016143754,pick up the salad dressing and place it in the basket
+True,0.051534373,pick up the salad dressing and place it in the basket
+True,0.00010701065,pick up the salad dressing and place it in the basket
+True,0.0011088793,pick up the salad dressing and place it in the basket
+True,0.0003923484,pick up the salad dressing and place it in the basket
+True,5.249801e-05,pick up the salad dressing and place it in the basket
+True,0.2426386,pick up the salad dressing and place it in the basket
+True,0.00020080458,pick up the salad dressing and place it in the basket
+True,3.4916457e-06,pick up the salad dressing and place it in the basket
+True,0.024274865,pick up the salad dressing and place it in the basket
+False,5.428475e-16,pick up the salad dressing and place it in the basket
+True,0.004040336,pick up the salad dressing and place it in the basket
+True,5.3854015e-05,pick up the salad dressing and place it in the basket
+True,0.0002006291,pick up the salad dressing and place it in the basket
+False,3.643642e-14,pick up the salad dressing and place it in the basket
+True,4.8517068e-05,pick up the salad dressing and place it in the basket
+True,2.6496232e-15,pick up the salad dressing and place it in the basket
+True,0.00030804685,pick up the salad dressing and place it in the basket
+False,5.599907e-14,pick up the salad dressing and place it in the basket
+True,0.0008247714,pick up the salad dressing and place it in the basket
+True,2.4505644e-05,pick up the salad dressing and place it in the basket
+False,5.8498981999999995e-18,pick up the salad dressing and place it in the basket
+True,0.020645985,pick up the salad dressing and place it in the basket
+True,9.4481436e-07,pick up the salad dressing and place it in the basket
+True,0.012318469,pick up the salad dressing and place it in the basket
+True,1.8015672e-07,pick up the bbq sauce and place it in the basket
+False,5.869241500000001e-17,pick up the bbq sauce and place it in the basket
+True,2.2688562e-06,pick up the bbq sauce and place it in the basket
+False,1.6485167999999999e-18,pick up the bbq sauce and place it in the basket
+False,2.7364653e-17,pick up the bbq sauce and place it in the basket
+False,4.6343145e-19,pick up the bbq sauce and place it in the basket
+False,4.390365299999999e-18,pick up the bbq sauce and place it in the basket
+True,1.0603565e-05,pick up the bbq sauce and place it in the basket
+True,0.00018323684,pick up the bbq sauce and place it in the basket
+False,6.744881e-18,pick up the bbq sauce and place it in the basket
+True,1.0333564e-11,pick up the bbq sauce and place it in the basket
+False,1.1504939e-17,pick up the bbq sauce and place it in the basket
+True,2.4257978e-09,pick up the bbq sauce and place it in the basket
+True,3.6539735e-08,pick up the bbq sauce and place it in the basket
+True,1.3024768e-05,pick up the bbq sauce and place it in the basket
+True,0.00021504694,pick up the bbq sauce and place it in the basket
+False,4.0881126e-23,pick up the bbq sauce and place it in the basket
+True,0.0003913246,pick up the bbq sauce and place it in the basket
+True,1.5407789e-08,pick up the bbq sauce and place it in the basket
+False,6.3678995e-19,pick up the bbq sauce and place it in the basket
+True,2.4452243e-05,pick up the bbq sauce and place it in the basket
+True,5.484484e-06,pick up the bbq sauce and place it in the basket
+False,1.4978826e-17,pick up the bbq sauce and place it in the basket
+True,5.6119294e-08,pick up the bbq sauce and place it in the basket
+False,5.959021e-13,pick up the bbq sauce and place it in the basket
+False,3.2307578e-18,pick up the bbq sauce and place it in the basket
+True,2.7483311e-09,pick up the bbq sauce and place it in the basket
+True,4.3389104e-05,pick up the bbq sauce and place it in the basket
+False,3.2052274e-13,pick up the bbq sauce and place it in the basket
+True,0.0021533042,pick up the bbq sauce and place it in the basket
+True,5.068102e-09,pick up the ketchup and place it in the basket
+False,7.769958e-10,pick up the ketchup and place it in the basket
+True,0.0022763798,pick up the ketchup and place it in the basket
+True,0.011277636,pick up the ketchup and place it in the basket
+True,5.5400676e-07,pick up the ketchup and place it in the basket
+True,0.00018423692,pick up the ketchup and place it in the basket
+True,0.006172142,pick up the ketchup and place it in the basket
+True,0.00011378907,pick up the ketchup and place it in the basket
+True,0.0022236118,pick up the ketchup and place it in the basket
+True,3.7059472e-08,pick up the ketchup and place it in the basket
+True,0.011966844,pick up the ketchup and place it in the basket
+False,4.631795e-11,pick up the ketchup and place it in the basket
+True,6.629821e-06,pick up the ketchup and place it in the basket
+True,1.3382766e-05,pick up the ketchup and place it in the basket
+True,2.828442e-07,pick up the ketchup and place it in the basket
+True,8.893643e-09,pick up the ketchup and place it in the basket
+True,1.5064429e-05,pick up the ketchup and place it in the basket
+False,2.3703306e-10,pick up the ketchup and place it in the basket
+True,3.0881794e-05,pick up the ketchup and place it in the basket
+True,0.02842241,pick up the ketchup and place it in the basket
+True,7.273132e-09,pick up the ketchup and place it in the basket
+True,0.00959999,pick up the ketchup and place it in the basket
+True,0.011933226,pick up the ketchup and place it in the basket
+True,9.770374e-07,pick up the ketchup and place it in the basket
+True,0.007038723,pick up the ketchup and place it in the basket
+True,0.00015882633,pick up the ketchup and place it in the basket
+True,0.00520501,pick up the ketchup and place it in the basket
+True,0.00030604078,pick up the ketchup and place it in the basket
+True,0.13612294,pick up the ketchup and place it in the basket
+False,9.4865095e-14,pick up the ketchup and place it in the basket
+True,2.0075743e-11,pick up the tomato sauce and place it in the basket
+True,1.8729412e-06,pick up the tomato sauce and place it in the basket
+False,7.5257047e-19,pick up the tomato sauce and place it in the basket
+True,5.317816e-05,pick up the tomato sauce and place it in the basket
+True,3.4467218e-10,pick up the tomato sauce and place it in the basket
+True,8.70129e-05,pick up the tomato sauce and place it in the basket
+True,5.69343e-08,pick up the tomato sauce and place it in the basket
+True,0.00023325498,pick up the tomato sauce and place it in the basket
+True,0.009846003,pick up the tomato sauce and place it in the basket
+True,1.1147677e-13,pick up the tomato sauce and place it in the basket
+True,8.6391265e-06,pick up the tomato sauce and place it in the basket
+True,0.00023501109,pick up the tomato sauce and place it in the basket
+True,6.3948086e-05,pick up the tomato sauce and place it in the basket
+False,4.2089e-11,pick up the tomato sauce and place it in the basket
+True,3.2664498e-06,pick up the tomato sauce and place it in the basket
+False,3.2516188000000004e-22,pick up the tomato sauce and place it in the basket
+True,9.0091197e-07,pick up the tomato sauce and place it in the basket
+False,1.0128976999999999e-19,pick up the tomato sauce and place it in the basket
+True,0.010620809,pick up the tomato sauce and place it in the basket
+True,4.0456896e-08,pick up the tomato sauce and place it in the basket
+True,1.641704e-08,pick up the tomato sauce and place it in the basket
+True,4.5498414e-06,pick up the tomato sauce and place it in the basket
+True,6.85743e-06,pick up the tomato sauce and place it in the basket
+True,6.313387e-06,pick up the tomato sauce and place it in the basket
+True,4.1715887e-07,pick up the tomato sauce and place it in the basket
+False,2.0369911e-19,pick up the tomato sauce and place it in the basket
+True,0.002972083,pick up the tomato sauce and place it in the basket
+True,0.0040994873,pick up the tomato sauce and place it in the basket
+False,3.1508416000000003e-21,pick up the tomato sauce and place it in the basket
+True,2.0133763e-11,pick up the tomato sauce and place it in the basket
+True,3.1582938e-06,pick up the butter and place it in the basket
+True,7.108192e-07,pick up the butter and place it in the basket
+True,2.126995e-06,pick up the butter and place it in the basket
+True,6.9787953e-09,pick up the butter and place it in the basket
+True,2.2659716e-08,pick up the butter and place it in the basket
+True,0.013988706,pick up the butter and place it in the basket
+False,4.6986446e-15,pick up the butter and place it in the basket
+True,8.469663e-09,pick up the butter and place it in the basket
+True,0.00069124164,pick up the butter and place it in the basket
+True,4.109237e-08,pick up the butter and place it in the basket
+True,1.2450934e-05,pick up the butter and place it in the basket
+True,2.808062e-09,pick up the butter and place it in the basket
+True,0.009938651,pick up the butter and place it in the basket
+True,0.06151881,pick up the butter and place it in the basket
+False,1.2824751e-17,pick up the butter and place it in the basket
+True,6.493844e-09,pick up the butter and place it in the basket
+True,7.837456e-13,pick up the butter and place it in the basket
+True,1.4916819e-07,pick up the butter and place it in the basket
+True,4.0330486e-09,pick up the butter and place it in the basket
+True,0.0019708883,pick up the butter and place it in the basket
+True,5.3499666e-06,pick up the butter and place it in the basket
+True,5.5662134e-08,pick up the butter and place it in the basket
+True,4.1811287e-05,pick up the butter and place it in the basket
+True,2.8306167e-05,pick up the butter and place it in the basket
+True,2.712343e-14,pick up the butter and place it in the basket
+True,0.00031851802,pick up the butter and place it in the basket
+True,1.2685524e-06,pick up the butter and place it in the basket
+True,0.000120832825,pick up the butter and place it in the basket
+True,4.351463e-08,pick up the butter and place it in the basket
+True,0.0017098057,pick up the butter and place it in the basket
+True,0.0002515447,pick up the milk and place it in the basket
+True,4.8378834e-09,pick up the milk and place it in the basket
+True,1.7934181000000002e-16,pick up the milk and place it in the basket
+True,5.411807e-07,pick up the milk and place it in the basket
+True,1.3712309e-05,pick up the milk and place it in the basket
+True,0.019368295,pick up the milk and place it in the basket
+True,1.1734912e-05,pick up the milk and place it in the basket
+True,0.039412517,pick up the milk and place it in the basket
+True,0.00065013004,pick up the milk and place it in the basket
+True,1.3949888e-06,pick up the milk and place it in the basket
+False,3.9164036000000004e-32,pick up the milk and place it in the basket
+True,0.022932027,pick up the milk and place it in the basket
+True,2.694698e-08,pick up the milk and place it in the basket
+True,0.03699525,pick up the milk and place it in the basket
+True,1.1255907e-05,pick up the milk and place it in the basket
+True,0.002310045,pick up the milk and place it in the basket
+True,2.3261452e-06,pick up the milk and place it in the basket
+True,5.067387e-07,pick up the milk and place it in the basket
+True,0.05503483,pick up the milk and place it in the basket
+True,6.1642386e-05,pick up the milk and place it in the basket
+True,0.06291801,pick up the milk and place it in the basket
+True,1.1440672e-05,pick up the milk and place it in the basket
+True,0.00010957645,pick up the milk and place it in the basket
+True,0.000109830056,pick up the milk and place it in the basket
+True,7.5703616e-17,pick up the milk and place it in the basket
+True,5.534016e-05,pick up the milk and place it in the basket
+True,0.0007059175,pick up the milk and place it in the basket
+True,0.00011293621,pick up the milk and place it in the basket
+True,0.00011821224,pick up the milk and place it in the basket
+True,0.04034577,pick up the milk and place it in the basket
+True,2.5922014e-05,pick up the chocolate pudding and place it in the basket
+True,0.00010314928,pick up the chocolate pudding and place it in the basket
+True,1.9244089e-08,pick up the chocolate pudding and place it in the basket
+True,3.1161195e-05,pick up the chocolate pudding and place it in the basket
+True,8.640657e-11,pick up the chocolate pudding and place it in the basket
+True,0.010516942,pick up the chocolate pudding and place it in the basket
+True,1.3620092e-08,pick up the chocolate pudding and place it in the basket
+True,6.022622e-08,pick up the chocolate pudding and place it in the basket
+True,1.1108744e-07,pick up the chocolate pudding and place it in the basket
+False,3.2999278e-26,pick up the chocolate pudding and place it in the basket
+True,7.955031e-07,pick up the chocolate pudding and place it in the basket
+False,3.0286248e-18,pick up the chocolate pudding and place it in the basket
+True,4.096989e-06,pick up the chocolate pudding and place it in the basket
+False,2.2473158e-12,pick up the chocolate pudding and place it in the basket
+True,4.140364e-07,pick up the chocolate pudding and place it in the basket
+True,4.087314e-09,pick up the chocolate pudding and place it in the basket
+True,0.00014717343,pick up the chocolate pudding and place it in the basket
+True,1.6371677e-06,pick up the chocolate pudding and place it in the basket
+True,0.00013561998,pick up the chocolate pudding and place it in the basket
+True,0.17546347,pick up the chocolate pudding and place it in the basket
+True,5.283615e-08,pick up the chocolate pudding and place it in the basket
+True,5.2798396e-07,pick up the chocolate pudding and place it in the basket
+True,0.00073392404,pick up the chocolate pudding and place it in the basket
+True,3.287414e-06,pick up the chocolate pudding and place it in the basket
+True,1.1267216e-06,pick up the chocolate pudding and place it in the basket
+True,1.9369195e-06,pick up the chocolate pudding and place it in the basket
+True,2.849087e-07,pick up the chocolate pudding and place it in the basket
+True,0.00051787886,pick up the chocolate pudding and place it in the basket
+True,0.0052226447,pick up the chocolate pudding and place it in the basket
+True,5.2061097e-07,pick up the chocolate pudding and place it in the basket
+True,0.00022523121,pick up the orange juice and place it in the basket
+True,0.00059113244,pick up the orange juice and place it in the basket
+True,0.20564146,pick up the orange juice and place it in the basket
+True,0.119975366,pick up the orange juice and place it in the basket
+True,0.0020646139,pick up the orange juice and place it in the basket
+True,0.0016577352,pick up the orange juice and place it in the basket
+True,0.02307662,pick up the orange juice and place it in the basket
+True,1.8217084e-05,pick up the orange juice and place it in the basket
+True,0.11578895,pick up the orange juice and place it in the basket
+True,9.449575e-06,pick up the orange juice and place it in the basket
+True,1.693484e-05,pick up the orange juice and place it in the basket
+True,0.00038412714,pick up the orange juice and place it in the basket
+True,2.420683e-05,pick up the orange juice and place it in the basket
+True,0.0049418495,pick up the orange juice and place it in the basket
+True,0.0051784744,pick up the orange juice and place it in the basket
+True,5.213921e-06,pick up the orange juice and place it in the basket
+True,0.0016561709,pick up the orange juice and place it in the basket
+True,0.0058241463,pick up the orange juice and place it in the basket
+True,6.785219e-07,pick up the orange juice and place it in the basket
+True,0.00011030998,pick up the orange juice and place it in the basket
+True,0.008787632,pick up the orange juice and place it in the basket
+True,2.461338e-05,pick up the orange juice and place it in the basket
+True,2.6191528e-05,pick up the orange juice and place it in the basket
+True,9.273072e-07,pick up the orange juice and place it in the basket
+True,6.618934e-05,pick up the orange juice and place it in the basket
+True,2.226471e-11,pick up the orange juice and place it in the basket
+True,8.993323e-05,pick up the orange juice and place it in the basket
+True,0.0010554305,pick up the orange juice and place it in the basket
+True,0.07465884,pick up the orange juice and place it in the basket
+True,0.00014117379,pick up the orange juice and place it in the basket

@@ -56,7 +56,7 @@ def calculate_ece_on_results(confidences, success_rate, num_bins=10, save_name=N
         bin_avg_success_rates.append(bin_avg_success_rate)
         bin_avg_confidences.append(bin_avg_confidence)
         # Compute contribution to ECE
-        ece += np.abs(bin_avg_confidence - bin_avg_success_rate)
+        ece += len(bin_confidences) * np.abs(bin_avg_confidence - bin_avg_success_rate)
     try:
         returned_ece = ece / (num_bins - empty_bins)
     except ZeroDivisionError:

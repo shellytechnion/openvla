@@ -366,7 +366,7 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
             patch_features = self.vision_backbone(pixel_values)
 
             # Projection Logic =>> Update Attention Mask
-            projected_patch_embeddings = self.projector(patch_features)
+            projected_patch_embeddings = self.projector(patch_features) #image embeddings
             projected_patch_attention_mask = None
             if attention_mask is not None:
                 projected_patch_attention_mask = torch.full(
@@ -377,7 +377,7 @@ class PrismaticForConditionalGeneration(PrismaticPreTrainedModel):
                 )
 
             # Get Input Embeddings (from Language Model Embeddings)
-            input_embeddings = self.get_input_embeddings()(input_ids)
+            input_embeddings = self.get_input_embeddings()(input_ids) # input embeddings
 
             # Build Multimodal Embeddings & Attention Mask =>> Prismatic defaults to inserting after <BOS> token (1:)
             multimodal_embeddings = torch.cat(
@@ -516,7 +516,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
 
         # Run VLA inference
         generated_ids = self.generate(input_ids, max_new_tokens=self.get_action_dim(unnorm_key), output_scores=True,
-                                      output_hidden_states=True, return_dict_in_generate=True, **kwargs)
+                                      output_hidden_states=True, return_dict_in_generate=True, output_attentions=True, **kwargs)
         # Extract predicted action tokens and translate into (normalized) continuous actions
         predicted_action_token_ids = generated_ids.sequences[0, -self.get_action_dim(unnorm_key) :].cpu().numpy()
         discretized_actions = self.vocab_size - predicted_action_token_ids
@@ -539,6 +539,9 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         probs = np.array([i.max().cpu().numpy() for i in new_logits])
         test = [predicted_action_token_ids[i] == np.argmax(new_logits[i].cpu().numpy()) for i in range(len(logits))]
         assert (np.array(test) == True).all()
+
+        ## input_embeddings[:, :1, :] = size 1, projected_patch_embeddings = size 256 , input_embeddings[:, 1:, :] = size 28
+        # total of 285
 
         return actions, probs
 

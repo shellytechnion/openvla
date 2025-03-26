@@ -481,11 +481,11 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print("file NOT FOUND !!")
         config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
-    action_calibration_types = ["min", "avg", "mul", "max"]
-    episode_calibration_types = ["mul", "max", "min", "avg"]
+    action_calibration_types =  ["min"] #["min", "avg", "mul", "max"]
+    episode_calibration_types = ["min"] #["mul", "avg", "max", "min", ]
     for action_type in action_calibration_types:
         for episode_type in episode_calibration_types:
-            # config.use_wandb = False
+            config.use_wandb = False
             config.action_calibration_type = action_type
             config.episode_calibration_type = episode_type
             eval_libero(config)
@@ -505,9 +505,9 @@ if __name__ == "__main__":
     # directory_path = '/home/shellyf/Projects/openvla/'
     # join_csvs(csv_files, directory_path)
 
-    csv_path = "/home/shellyf/Projects/openvla/combined_results_action_avg_episode_mul.csv"
-    calc_conformal_prediction(csv_path, q=0.9, save=False)
-    calc_conformal_prediction(csv_path, q=0.95, save=False)
+    # csv_path = "/home/shellyf/Projects/openvla/combined_results_action_avg_episode_mul.csv"
+    # calc_conformal_prediction(csv_path, q=0.9, save=False)
+    # calc_conformal_prediction(csv_path, q=0.95, save=False)
 
 
 

@@ -183,8 +183,8 @@ def get_vla_action(vla, processor, base_vla_name, obs, task_label, unnorm_key, d
     inputs = processor(prompt, image).to(device, dtype=torch.bfloat16)
 
     # Get action and probabilities for each action
-    action, probs = vla.predict_action(**inputs, unnorm_key=unnorm_key, do_sample=False)
-    return action, probs
+    action, probs, logits, predicted_action_token_ids = vla.predict_action(**inputs, unnorm_key=unnorm_key, do_sample=False)
+    return action, probs, logits, predicted_action_token_ids
 
 def add_text_to_image(image: np.ndarray, text: str, position: tuple = (5, 5)) -> np.ndarray:
     # Convert the NumPy array image to a PIL image

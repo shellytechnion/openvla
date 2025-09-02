@@ -543,7 +543,7 @@ class OpenVLAForActionPrediction(PrismaticForConditionalGeneration):
         ## input_embeddings[:, :1, :] = size 1, projected_patch_embeddings = size 256 , input_embeddings[:, 1:, :] = size 28
         # total of 285
 
-        return actions, probs
+        return actions, probs, logits, predicted_action_token_ids
 
     @staticmethod
     def _check_unnorm_key(norm_stats: Dict[str, Dict[str, Any]], unnorm_key: Optional[str]) -> str:

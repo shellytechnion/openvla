@@ -23,17 +23,18 @@ from dataclasses import dataclass, fields
 from pathlib import Path
 from typing import Optional, Union
 import yaml
+import pickle as pkl
 
 import draccus
 import numpy as np
 import tqdm
 import csv
-# sys.path.append('/mnt/pub/shellyf/tmp_openVLA')
-# sys.path.append('/mnt/pub/shellyf/tmp_openVLA/LIBERO')
-#sys.path.append("/home/shellyf/Projects/openvla")
-#sys.path.append("/home/shellyf/Projects/openvla/LIBERO")
-sys.path.append("/home/shelfr5/Projects/openvla")
-sys.path.append("/home/shelfr5/Projects/openvla/LIBERO")
+sys.path.append('/mnt/pub/shellyf/tmp_openVLA')
+sys.path.append('/mnt/pub/shellyf/tmp_openVLA/LIBERO')
+# sys.path.append("/home/shellyf/Projects/openvla")
+# sys.path.append("/home/shellyf/Projects/openvla/LIBERO")
+# sys.path.append("/home/shellyfra/Projects/openvla")
+# sys.path.append("/home/shellyfra/Projects/openvla/LIBERO")
 from libero.libero import benchmark
 
 import wandb
@@ -85,8 +86,8 @@ class GenerateConfig:
     #################################################################################################################
     # in each action there are 7 DOF, so the action calibration is done on all DOFs by applying action_calibration_type
     # and the episode calibration is done on all actions by applying episode_calibration_type
-    action_calibration_type: str = "mul"      # how to calculate probabilities of each action. Options: mul, max, min, avg, perplexity,
-    episode_calibration_type: str = "mul"     # how to calculate probabilities of each episode. Options: mul, max, min, avg, perplexity,
+    action_calibration_type: str = "avg"      # how to calculate probabilities of each action. Options: mul, max, min, avg, perplexity,
+    episode_calibration_type: str = "avg"     # how to calculate probabilities of each episode. Options: mul, max, min, avg, perplexity,
     #################################################################################################################
     # Utils
     #################################################################################################################
@@ -199,6 +200,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
         successes_ece = []
         episode_probs_ece = []
         for episode_idx in tqdm.tqdm(range(cfg.num_trials_per_task)):
+            episode_data = []
             # Reset environment
             env.reset()
 
@@ -244,7 +246,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     }
 
                     # Query model to get action and probabilities
-                    action, probs = get_action(
+                    (action, probs, logits, predicted_action_token_ids) = get_action(
                         cfg,
                         model,
                         observation,
@@ -253,7 +255,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     )
 
                    # Save preprocessed image for replay video
-                    img = add_text_to_image(img, f"Probs: {probs}")
+                   #  img = add_text_to_image(img, f"Probs: {probs}")
                     replay_images.append(img)
 
                     # Normalize gripper action [0,1] -> [-1,+1] because the environment expects the latter
@@ -263,6 +265,14 @@ def eval_libero(cfg: GenerateConfig) -> None:
                     # (0 = close, 1 = open), so flip it back (-1 = open, +1 = close) before executing the action
                     if cfg.model_family == "openvla":
                         action = invert_gripper_action(action)
+
+                    # save logits and predicted token ids for all time steps
+                    data_dict = {
+                        "probs": probs,
+                        "predicted_token_ids": predicted_action_token_ids,
+                        "actions": action,
+                    }
+                    episode_data.append(data_dict)
 
                     # process the probabilities
                     # action_prob = probs_for_calibration(probs, cfg.action_calibration_type)
@@ -304,17 +314,26 @@ def eval_libero(cfg: GenerateConfig) -> None:
             episode_prob = 1
             episode_probs_ece.append(episode_prob)
             successes_ece.append(float(done))
-            ece = calculate_ece(episode_probs_ece, successes_ece)
+            # ece = calculate_ece(episode_probs_ece, successes_ece)
             # Save a replay video of the episode
-            if task_episodes % 3 == 0:
+            if False: #task_episodes % 3 == 0:
                 save_rollout_video(
-                    replay_images, task_episodes, success=done, task_description=task_description + f'-action_{cfg.action_calibration_type}-episode_{cfg.episode_calibration_type}', log_file=log_file
+                    replay_images, task_episodes, success=done, task_description=task_description, log_file=log_file,
+                    suite_name=cfg.task_suite_name, task_id=task_id
                 )
+
+            # After the episode ends, save the data
+            results_dir = f"../results/{cfg.task_suite_name}/0"
+            os.makedirs(results_dir, exist_ok=True)
+            with open(os.path.join(results_dir, f"episode_{episode_idx + task_id*10}.pkl"), "wb") as f:
+                episode_data.append({"success": done})
+                pkl.dump(episode_data, f)
+            print("saved episode data to pkl file: ", os.path.join(results_dir, f"episode_{episode_idx + task_id*50}.pkl"))
 
             # Log current results
             print(f"Success: {done}")
             print(f"Episode probability: {episode_prob}")
-            print(f"ECE: {ece}")
+            # print(f"ECE: {ece}")
             print(f"# episodes completed so far: {total_episodes + 1}")
             print(f"# successes: {total_successes} ({total_successes / (total_episodes + 1) * 100:.1f}%)")
             log_file.write(f"Success: {done}\n")
@@ -474,21 +493,25 @@ if __name__ == "__main__":
     Initializing the default config file...
     The following information is stored in the config file: /home/shelfr5/.libero/config.yaml
     """
-    # Step 1:
-    os.environ['TOKENIZERS_PARALLELISM'] = 'false'
     try:
         config = GenerateConfig.from_yaml('LIBERO/libero/configs/config.yaml')
     except FileNotFoundError:
         print("file NOT FOUND !!")
-        config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
-    action_calibration_types =  ["min"] #["min", "avg", "mul", "max"]
-    episode_calibration_types = ["min"] #["mul", "avg", "max", "min", ]
-    for action_type in action_calibration_types:
-        for episode_type in episode_calibration_types:
-            config.use_wandb = False
-            config.action_calibration_type = action_type
-            config.episode_calibration_type = episode_type
-            eval_libero(config)
+        # config = GenerateConfig.from_yaml("/home/shellyf/Projects/openvla/LIBERO/libero/configs/config.yaml")
+        # config = GenerateConfig.from_yaml("/home/shellyfra/Projects/openvla/LIBERO/libero/configs/config.yaml")
+        config = GenerateConfig.from_yaml("/mnt/pub/shellyf/tmp_openVLA/LIBERO/libero/configs/config.yaml")
+    # action_calibration_types =  ["min"] #["min", "avg", "mul", "max"]
+    # episode_calibration_types = ["min"] #["mul", "avg", "max", "min", ]
+    task_suites = ['spatial', 'object', 'goal'] # ['spatial', 'object', 'goal', '10', '90']
+
+    # for action_type in action_calibration_types:
+    #     for episode_type in episode_calibration_types:
+    for task_suite in task_suites:
+        config.use_wandb = False
+        config.benchmark_name = "LIBERO_" + task_suite.upper()
+        config.pretrained_checkpoint = f"openvla/openvla-7b-finetuned-libero-{task_suite}"
+        config.task_suite_name = "libero_" + task_suite
+        eval_libero(config)
     # step 2
     #evaluate_results()
     # step 3

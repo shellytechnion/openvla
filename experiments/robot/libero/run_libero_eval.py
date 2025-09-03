@@ -325,7 +325,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
             # After the episode ends, save the data
             results_dir = f"../results/{cfg.task_suite_name}/0"
             os.makedirs(results_dir, exist_ok=True)
-            with open(os.path.join(results_dir, f"episode_{episode_idx + task_id*10}.pkl"), "wb") as f:
+            with open(os.path.join(results_dir, f"episode_{episode_idx + task_id*50}.pkl"), "wb") as f:
                 episode_data.append({"success": done})
                 pkl.dump(episode_data, f)
             print("saved episode data to pkl file: ", os.path.join(results_dir, f"episode_{episode_idx + task_id*50}.pkl"))

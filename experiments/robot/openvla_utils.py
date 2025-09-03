@@ -62,7 +62,7 @@ def get_vla(cfg):
         # vla = vla.to(DEVICE)
 
     # Load dataset stats used during finetuning (for action un-normalization).
-    dataset_statistics_path = os.path.join("experiments/robot/libero/experiments", "dataset_statistics.json")
+    dataset_statistics_path = os.path.join("experiments", "dataset_statistics.json")
     if os.path.isfile(dataset_statistics_path):
         with open(dataset_statistics_path, "r") as f:
             norm_stats = json.load(f)
@@ -165,19 +165,7 @@ def get_vla_action(vla, processor, base_vla_name, obs, task_label, unnorm_key, d
             f"{OPENVLA_V01_SYSTEM_PROMPT} USER: What action should the robot take to {task_label.lower()}? ASSISTANT:"
         )
     else:  # OpenVLA
-        #prompt = f"In: What action should the robot take to {task_label.lower()}?\nOut:"
-        prompt = (
-            f"In: Let's think step by step. in order to {task_label.lower()} the robot needs to:"
-            "First, identify the alphabet soup and tomato sauce. "
-            "Next, pick up the alphabet soup. "
-            "Then, move towards the basket. "
-            "After that, place the alphabet soup in the basket. "
-            "Next, return to pick up the tomato sauce. "
-            "Then, pick up the tomato sauce. "
-            "Next, move to the basket again. "
-            "Finally, place the tomato sauce in the basket. "
-            f"What action should the robot take to {task_label.lower()}? Out:"
-        )
+        prompt = f"In: What action should the robot take to {task_label.lower()}?\nOut:"
 
     # Process inputs.
     inputs = processor(prompt, image).to(device, dtype=torch.bfloat16)
